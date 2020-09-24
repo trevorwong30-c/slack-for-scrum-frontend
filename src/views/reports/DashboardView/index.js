@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Container,
   Grid,
@@ -13,6 +13,8 @@ import TasksProgress from './TasksProgress';
 import TotalCustomers from './TotalCustomers';
 import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
+import { useDispatch, useSelector } from "react-redux";
+import { loadDashboardData } from "../../../actions/dashboardActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +26,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+
+  const dashboardState = useSelector((state) => state.dashboardState);
+
+  const dispatch = useDispatch();
+
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log("Dashboard View Loaded");
+    console.log(dashboardState.data);
+    dispatch(loadDashboardData());
+  }, []);
+
+  useEffect(() => {
+    console.log("dashboard data updated", dashboardState.data);
+  }, [dashboardState.data]);
 
   return (
     <Page
