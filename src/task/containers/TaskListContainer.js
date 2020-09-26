@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
-import {loadRequirementList} from "../actions/loadRequirementList";
 
-const ConfirmRequirementContainer = () => {
+const TaskListContainer = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -13,15 +10,13 @@ const ConfirmRequirementContainer = () => {
 
   const dispatch = useDispatch();
 
-  const history = useHistory();
-
   const showModal = () => {
     setIsModalVisible(true);
   }
-  //
-  // const closeModal = () => {
-  //   setIsModalVisible(false);
-  // }
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  }
 
   const onModalClosed = () => {
 
@@ -29,7 +24,6 @@ const ConfirmRequirementContainer = () => {
 
   const confirmRequirementList = () => {
     // dispatch an API action here
-    history.push("/task");
   }
 
   const renderRequirementList = () => {
@@ -53,31 +47,22 @@ const ConfirmRequirementContainer = () => {
   }
 
   useEffect(() => {
-    dispatch(loadRequirementList());
     showModal();
   }, []);
 
   return (
-    <div className="ConfirmRequirementContainer">
+    <div className="TaskListContainer">
       <Modal show={isModalVisible} onHide={onModalClosed}>
         <Modal.Header closeButton>
-          <Modal.Title>Requirement List</Modal.Title>
+          <Modal.Title>Task List</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { renderRequirementList() }
+
         </Modal.Body>
-        <Modal.Footer>
-          {/*<Button variant="secondary" onClick={closeModal}>*/}
-          {/*  Close*/}
-          {/*</Button>*/}
-          <Button variant="primary" onClick={confirmRequirementList}>
-            Confirm Requirements
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
 
 };
 
-export default ConfirmRequirementContainer;
+export default TaskListContainer;

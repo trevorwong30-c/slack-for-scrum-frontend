@@ -5,33 +5,10 @@ import mockResponseMap from "../mockResponses";
 export const LOAD_REQUIREMENT_LIST_SUCCESS = "LOAD_REQUIREMENT_LIST_SUCCESS";
 export const LOAD_REQUIREMENT_LIST_FAIL = "LOAD_REQUIREMENT_LIST_FAIL";
 
-axios.interceptors.request.use((config) => {
-
-  if (appConfig.mockAPIResponse) {
-    return Promise.resolve(mockResponseMap[config.url]);
-  }
-
-  config.url = appConfig.baseURL + config.url;
-  // Do something before request is sent
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
-
 export const loadRequirementList = () => {
   return dispatch => {
-
-    axios.get("/requirement/list").then((response) => {
-      console.log("response", response);
-    })
-    .catch((error) => {
-      console.log("catch", error);
-    })
-    .finally((response) => {
-      console.log("finally", response);
-    });
-
+    const payload = require("../mockResponses/requirementList.json");
+    dispatch(loadRequirementListSuccess(payload.list));
     // return axios.get("/requirement/list").then((response) => {
     //   console.log(`response`, response);
     //   dispatch(loadRequirementListSuccess(response.list));

@@ -1,6 +1,7 @@
 import React from 'react';
 import ConfirmRequirementContainer from "./containers/ConfirmRequirementContainer";
-import {Route} from "react-router-dom";
+import { Route } from "react-router-dom";
+import "./style.scss";
 
 const RequirementRoute = () => {
 

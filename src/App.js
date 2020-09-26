@@ -7,7 +7,13 @@ import {Provider} from "react-redux";
 import {BrowserRouter as Router, Switch} from "react-router-dom";
 import RequirementRoute from "./requirement/route";
 
+import axios from 'axios';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import appConfig from './config';
+import mockResponseMap from './requirement/mockResponses';
+import SprintRoute from './sprint/route';
+import TaskRoute from './task/route';
 
 const store = configureStore({
   reducer: rootReducer,
@@ -18,6 +24,20 @@ const store = configureStore({
   // enhancers: [reduxBatch],
 });
 
+axios.interceptors.request.use((config) => {
+  //
+  // if (appConfig.mockAPIResponse) {
+  //   return Promise.resolve(mockResponseMap[config.url]);
+  // }
+
+  config.url = appConfig.baseURL + config.url;
+  // Do something before request is sent
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
+});
+
 function App() {
   return (
     <Provider store={store}>
@@ -25,6 +45,8 @@ function App() {
         <Router>
           <Switch>
             <RequirementRoute />
+            <SprintRoute />
+            <TaskRoute />
           </Switch>
         </Router>
       </div>
