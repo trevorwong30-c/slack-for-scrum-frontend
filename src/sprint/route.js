@@ -1,15 +1,19 @@
 import React from 'react';
-import { Route } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import "./style.scss";
 
 const SprintRoute = () => {
 
+  let { path } = useRouteMatch();
+
   return (
-    <>
-      <Route exact path="/sprint">
-        <div>Sprint!</div>
-      </Route>
-    </>
+    <div>
+      <Switch>
+        <Route exact path={path}>
+          <div>Sprint!</div>
+        </Route>
+      </Switch>
+    </div>
   );
 
 }

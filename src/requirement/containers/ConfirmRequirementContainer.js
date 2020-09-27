@@ -52,10 +52,17 @@ const ConfirmRequirementContainer = () => {
     }
   }
 
+  const onRequirementListChanged = () => {
+    if (requirementState.list.length > 0) {
+      showModal();
+    }
+  }
+
   useEffect(() => {
     dispatch(loadRequirementList());
-    showModal();
   }, []);
+
+  useEffect(onRequirementListChanged, [requirementState.list]);
 
   return (
     <div className="ConfirmRequirementContainer">

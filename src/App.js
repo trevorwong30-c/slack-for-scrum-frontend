@@ -4,16 +4,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./rootReducer";
 import createRootState from "./rootState";
 import {Provider} from "react-redux";
-import {BrowserRouter as Router, Switch} from "react-router-dom";
-import RequirementRoute from "./requirement/route";
 
 import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import appConfig from './config';
-import mockResponseMap from './requirement/mockResponses';
-import SprintRoute from './sprint/route';
-import TaskRoute from './task/route';
+import RootRoute from './rootRoute';
 
 const store = configureStore({
   reducer: rootReducer,
@@ -42,13 +38,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <Router>
-          <Switch>
-            <RequirementRoute />
-            <SprintRoute />
-            <TaskRoute />
-          </Switch>
-        </Router>
+        <RootRoute />
       </div>
     </Provider>
   );
