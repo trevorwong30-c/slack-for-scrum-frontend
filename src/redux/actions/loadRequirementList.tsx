@@ -1,6 +1,5 @@
-import { Action, ThunkAction } from '@reduxjs/toolkit';
+import { ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import mockRequirementList from '../../mockReponses/requirement/requirementList.json';
 import { Requirement } from '../../interfaces';
 import { getRequirementList } from '../../services/requirementServices';
 import { parseRequirementResponse } from '../../parsers/requirementParser';

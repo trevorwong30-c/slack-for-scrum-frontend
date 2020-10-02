@@ -1,4 +1,3 @@
-import { DeepPartial } from '@reduxjs/toolkit';
 import createRequirementState from './redux/states/requirementState';
 import createSprintState from './redux/states/sprintState';
 import createTaskState from './redux/states/taskState';

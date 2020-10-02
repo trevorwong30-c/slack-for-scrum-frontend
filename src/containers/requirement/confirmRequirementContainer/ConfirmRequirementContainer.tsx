@@ -22,11 +22,11 @@ const ConfirmRequirementContainer = () => {
     setIsModalVisible(true);
   };
 
-  const onModalClosed = () => {};
+  // const onModalClosed = () => {};
 
   const confirmRequirementList = () => {
     // dispatch an API action here
-    history.push('/task');
+    history.push('/splitRequirement');
   };
 
   const renderListItems = () => {
@@ -35,7 +35,7 @@ const ConfirmRequirementContainer = () => {
     }
 
     return requirements.map((requirement: Requirement) => {
-      return <ListGroup.Item>{requirement.description}</ListGroup.Item>;
+      return <ListGroup.Item>{requirement.title}</ListGroup.Item>;
     });
   };
 
@@ -53,7 +53,7 @@ const ConfirmRequirementContainer = () => {
 
   return (
     <div className="ConfirmRequirementContainer">
-      <Modal show={isModalVisible} onHide={onModalClosed}>
+      <Modal show={isModalVisible}>
         <Modal.Header>
           <Modal.Title>Requirement List</Modal.Title>
         </Modal.Header>

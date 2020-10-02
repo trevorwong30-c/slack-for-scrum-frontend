@@ -14,10 +14,10 @@ export interface Task {
   description: string;
   estimatedHour: number;
   remainingHour: number;
-  historicalSpent: any;
+  historicalSpent: any; //TODO need HistoricalSpent interface
   status: number;
   assigneeId: number;
-  commentsHistory: any;
+  commentsHistory: any; //TODO need CommentsHistory interface
   createdAt: Date;
   endAt: Date;
 }
