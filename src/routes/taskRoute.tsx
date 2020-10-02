@@ -1,10 +1,8 @@
 import React from 'react';
-import TaskListContainer from "./containers/TaskListContainer";
+import TaskListContainer from '../containers/task/taskListContainer/TaskListContainer';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import "./style.scss";
 
 const TaskRoute = () => {
-
   let { path } = useRouteMatch();
 
   return (
@@ -16,7 +14,6 @@ const TaskRoute = () => {
       </Switch>
     </div>
   );
-
-}
+};
 
 export default TaskRoute;

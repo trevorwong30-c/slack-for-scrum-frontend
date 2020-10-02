@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
-import createRootState from "./rootState";
-import {Provider} from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './rootReducer';
+import createRootState from './rootState';
+import { Provider } from 'react-redux';
 
 import axios from 'axios';
 
@@ -20,19 +20,22 @@ const store = configureStore({
   // enhancers: [reduxBatch],
 });
 
-axios.interceptors.request.use((config) => {
-  //
-  // if (appConfig.mockAPIResponse) {
-  //   return Promise.resolve(mockResponseMap[config.url]);
-  // }
+axios.interceptors.request.use(
+  (config) => {
+    //
+    // if (appConfig.mockAPIResponse) {
+    //   return Promise.resolve(mockResponseMap[config.url]);
+    // }
 
-  config.url = appConfig.baseURL + config.url;
-  // Do something before request is sent
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+    config.url = appConfig.baseURL + config.url;
+    // Do something before request is sent
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 
 function App() {
   return (

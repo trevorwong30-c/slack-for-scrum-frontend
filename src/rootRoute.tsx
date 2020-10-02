@@ -1,7 +1,12 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import RequirementRoute from './requirement/route';
-import SprintRoute from './sprint/route';
-import TaskRoute from './task/route';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch
+} from 'react-router-dom';
+import RequirementRoute from './routes/requirementRoute';
+import SprintRoute from './routes/sprintRoute';
+import TaskRoute from './routes/taskRoute';
 import React from 'react';
 
 const RootRoute = () => {
@@ -17,6 +22,6 @@ const RootRoute = () => {
       </Switch>
     </Router>
   );
-}
+};
 
 export default RootRoute;
