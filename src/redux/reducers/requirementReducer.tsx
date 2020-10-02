@@ -1,19 +1,23 @@
 import {
   LOAD_REQUIREMENT_LIST_SUCCESS,
-  LOAD_REQUIREMENT_LIST_FAIL
+  LOAD_REQUIREMENT_LIST_FAIL,
+  RequirementAction
 } from '../actions/loadRequirementList';
 
 const initialState = {
-  list: [],
+  requirements: [],
   error: ''
 };
 
-const requirementReducer = (state = initialState, action: any) => {
+const requirementReducer = (
+  state = initialState,
+  action: RequirementAction
+) => {
   switch (action.type) {
     case LOAD_REQUIREMENT_LIST_SUCCESS:
       return {
         ...state,
-        list: action.list
+        requirements: action.requirements
       };
     case LOAD_REQUIREMENT_LIST_FAIL:
       return {

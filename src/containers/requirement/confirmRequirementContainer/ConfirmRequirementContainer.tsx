@@ -4,12 +4,14 @@ import Button from 'react-bootstrap/Button';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
+import { ListGroup } from 'react-bootstrap';
+import { Requirement } from 'interfaces';
 
 const ConfirmRequirementContainer = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const requirementState = useSelector(
-    (state: RootStateOrAny) => state.requirement
+  const requirements: Requirement[] = useSelector(
+    (state: RootStateOrAny) => state.requirement.requirements
   );
 
   const dispatch = useDispatch();
@@ -19,10 +21,6 @@ const ConfirmRequirementContainer = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-  //
-  // const closeModal = () => {
-  //   setIsModalVisible(false);
-  // }
 
   const onModalClosed = () => {};
 
@@ -31,24 +29,18 @@ const ConfirmRequirementContainer = () => {
     history.push('/task');
   };
 
-  const renderRequirementList = () => {
-    let arr = [];
-
-    if (requirementState.list) {
-      for (let item of requirementState.list) {
-        arr.push(<li>{item.sDescription}</li>);
-      }
-
-      return (
-        <ul>
-          <li>{arr}</li>
-        </ul>
-      );
+  const renderListItems = () => {
+    if (!requirements) {
+      return <div />;
     }
+
+    return requirements.map((requirement: Requirement) => {
+      return <ListGroup.Item>{requirement.description}</ListGroup.Item>;
+    });
   };
 
   const onRequirementListChanged = () => {
-    if (requirementState.list.length > 0) {
+    if (requirements.length > 0) {
       showModal();
     }
   };
@@ -57,21 +49,20 @@ const ConfirmRequirementContainer = () => {
     dispatch(loadRequirementList());
   }, [dispatch]);
 
-  useEffect(onRequirementListChanged, [requirementState.list]);
+  useEffect(onRequirementListChanged, [requirements]);
 
   return (
     <div className="ConfirmRequirementContainer">
       <Modal show={isModalVisible} onHide={onModalClosed}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Requirement List</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{renderRequirementList()}</Modal.Body>
+        <Modal.Body>
+          <ListGroup>{renderListItems()}</ListGroup>
+        </Modal.Body>
         <Modal.Footer>
-          {/*<Button variant="secondary" onClick={closeModal}>*/}
-          {/*  Close*/}
-          {/*</Button>*/}
           <Button variant="primary" onClick={confirmRequirementList}>
-            Confirm Requirements
+            Confirm
           </Button>
         </Modal.Footer>
       </Modal>

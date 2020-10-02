@@ -3,8 +3,8 @@ export interface Requirement {
   title: string;
   description: string;
   estimatedEffort: number;
-  createdAt: Date;
-  dueAt: Date;
+  createdAt: string;
+  dueAt: string;
 }
 
 export interface Task {
