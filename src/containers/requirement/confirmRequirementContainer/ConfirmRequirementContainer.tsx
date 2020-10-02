@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
-import {loadRequirementList} from "../actions/loadRequirementList";
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 
 const ConfirmRequirementContainer = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const requirementState = useSelector(state => state.requirement);
+  const requirementState = useSelector(
+    (state: RootStateOrAny) => state.requirement
+  );
 
   const dispatch = useDispatch();
 
@@ -17,50 +18,44 @@ const ConfirmRequirementContainer = () => {
 
   const showModal = () => {
     setIsModalVisible(true);
-  }
+  };
   //
   // const closeModal = () => {
   //   setIsModalVisible(false);
   // }
 
-  const onModalClosed = () => {
-
-  }
+  const onModalClosed = () => {};
 
   const confirmRequirementList = () => {
     // dispatch an API action here
-    history.push("/task");
-  }
+    history.push('/task');
+  };
 
   const renderRequirementList = () => {
-
     let arr = [];
 
     if (requirementState.list) {
-      for(let item of requirementState.list) {
-        arr.push(
-          <li>{ item.sDescription }</li>
-        );
+      for (let item of requirementState.list) {
+        arr.push(<li>{item.sDescription}</li>);
       }
 
       return (
         <ul>
-          <li>{ arr }</li>
+          <li>{arr}</li>
         </ul>
       );
-
     }
-  }
+  };
 
   const onRequirementListChanged = () => {
     if (requirementState.list.length > 0) {
       showModal();
     }
-  }
+  };
 
   useEffect(() => {
     dispatch(loadRequirementList());
-  }, []);
+  }, [dispatch]);
 
   useEffect(onRequirementListChanged, [requirementState.list]);
 
@@ -70,9 +65,7 @@ const ConfirmRequirementContainer = () => {
         <Modal.Header closeButton>
           <Modal.Title>Requirement List</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          { renderRequirementList() }
-        </Modal.Body>
+        <Modal.Body>{renderRequirementList()}</Modal.Body>
         <Modal.Footer>
           {/*<Button variant="secondary" onClick={closeModal}>*/}
           {/*  Close*/}
@@ -84,7 +77,6 @@ const ConfirmRequirementContainer = () => {
       </Modal>
     </div>
   );
-
 };
 
 export default ConfirmRequirementContainer;
