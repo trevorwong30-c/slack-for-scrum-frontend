@@ -1,0 +1,19 @@
+{
+  "list": [
+    {
+      "id": "1",
+      "username": "Trevor",
+      "role": "Developer"
+    },
+    {
+      "id": "2",
+      "username": "Kay",
+      "role": "Developer"
+    },
+    {
+      "id": "3",
+      "username": "Chris",
+      "role": "Developer"
+    }
+  ]
+}

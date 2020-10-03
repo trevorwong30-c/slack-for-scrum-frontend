@@ -27,3 +27,13 @@ export interface User {
   username: string;
   role: number;
 }
+
+interface State {
+  error: string;
+}
+
+export interface UserState extends State {
+  users: Array<User>;
+  searchResults: Array<User>;
+  isSearching: boolean;
+}

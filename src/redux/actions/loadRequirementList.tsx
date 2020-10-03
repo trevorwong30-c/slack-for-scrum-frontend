@@ -12,7 +12,7 @@ export const loadRequirementList = (): ThunkAction<
 > => {
   return (dispatch) => {
     // TODO:: Should integrate with axios
-    // const payload = require('../mockResponses/requirementList.json');
+    // const payload = require('../mockResponses/searchUserByKeyword.json');
     const payload = mockRequirementList;
     dispatch(loadRequirementListSuccess(payload.list));
 
