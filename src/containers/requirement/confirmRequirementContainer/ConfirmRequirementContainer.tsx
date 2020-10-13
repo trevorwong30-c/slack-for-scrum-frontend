@@ -7,6 +7,15 @@ import { loadRequirementList } from '../../../redux/actions/loadRequirementList'
 import { ListGroup } from 'react-bootstrap';
 import { Requirement } from 'interfaces';
 
+const RequirementItem = ({ requirement }: { requirement: Requirement }) => {
+  return (
+    <div style={{ flexDirection: 'row' }}>
+      <h4>{requirement.title}</h4>
+      <text>{requirement.description}</text>
+    </div>
+  );
+};
+
 const ConfirmRequirementContainer = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,7 +44,12 @@ const ConfirmRequirementContainer = () => {
     }
 
     return requirements.map((requirement: Requirement) => {
-      return <ListGroup.Item>{requirement.title}</ListGroup.Item>;
+      // return <ListGroup.Item>{requirement.title}</ListGroup.Item>;
+      return (
+        <ListGroup.Item>
+          <RequirementItem requirement={requirement} />
+        </ListGroup.Item>
+      );
     });
   };
 
