@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import TaskDetailModal from "../taskDetailModal/TaskDetailModal";
+import {Task} from "../../../interfaces";
+import {TaskStatus} from "../../../enums";
 
 const TaskListContainer = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,14 +48,24 @@ const TaskListContainer = () => {
     showModal();
   }, []);
 
+  const task: Task = {
+    id: 473,
+    reqId: 12,
+    title: "Develop Task Detail Modal",
+    description: "Develop Task Detail Modal for the project.\nFeatures including log time, input estimated hours, change status, assign to group member and post comments.",
+    estimatedHour: 8,
+    remainingHour: 4,
+    historicalSpent: 3,
+    status: TaskStatus.ToDo,
+    assigneeId: 2,
+    commentsHistory: [],
+    createdAt: new Date(),
+    endAt: new Date()
+  };
+
   return (
     <div className="TaskListContainer">
-      <Modal show={isModalVisible} onHide={onModalClosed}>
-        <Modal.Header closeButton>
-          <Modal.Title>Task List</Modal.Title>
-        </Modal.Header>
-        <Modal.Body></Modal.Body>
-      </Modal>
+      <TaskDetailModal show={isModalVisible} onHide={onModalClosed} task={task} />
     </div>
   );
 };

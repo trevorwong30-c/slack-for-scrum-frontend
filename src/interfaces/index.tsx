@@ -1,3 +1,5 @@
+import {TaskStatus} from "../enums";
+
 export interface Requirement {
   id: number;
   title: string;
@@ -15,7 +17,7 @@ export interface Task {
   estimatedHour: number;
   remainingHour: number;
   historicalSpent: any;
-  status: number;
+  status: TaskStatus;
   assigneeId: number;
   commentsHistory: any;
   createdAt: Date;

@@ -1,0 +1,12 @@
+@media (min-width: 850px) {
+  .TaskDetailModal {
+    .modal-dialog {
+      max-width: 750px;
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+}
