@@ -1,19 +1,36 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { Requirement } from '../../../interfaces';
+import { Requirement, Task } from '../../../interfaces';
 import IconButton from '@material-ui/core/IconButton';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
 interface CreateNewTaskModalProp {
   isVisible: boolean;
-  requirement?: Requirement | null;
+  requirement: Requirement | null;
   onClose: () => void;
+  onRequirementCreated: (requirementId: number, task: Task) => void;
 }
 const CreateNewTaskModal = ({
   isVisible,
   requirement,
-  onClose
+  onClose,
+  onRequirementCreated
 }: CreateNewTaskModalProp) => {
+  const [title, setTitle] = useState('');
+
+  const createNewTask = () => {
+    if (requirement) {
+      let task: Task = { title: title };
+      onRequirementCreated(requirement.id, task);
+      onClose();
+    }
+  };
+
+  const handleTitleChange = (event: any) => {
+    console.log('title value: ', event.target.value);
+    setTitle(event.target.value);
+  };
+
   return (
     <Modal show={isVisible}>
       <Modal.Header>
@@ -26,13 +43,13 @@ const CreateNewTaskModal = ({
         <div>
           <Form.Group controlId="formTextTitle">
             <Form.Label>Task Title</Form.Label>
-            <Form.Control type="text" />
+            <Form.Control type="text" onChange={handleTitleChange} />
           </Form.Group>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={onClose}>
-          Save
+        <Button variant="primary" onClick={createNewTask}>
+          Create New Task
         </Button>
       </Modal.Footer>
     </Modal>

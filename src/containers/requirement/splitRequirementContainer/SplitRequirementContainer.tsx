@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Accordion, Card, Modal } from 'react-bootstrap';
+import { Button, Accordion, Card, Modal, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import { Requirement } from '../../../interfaces';
 import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/createNewTaskModal';
+import { Task } from '../../../interfaces';
+
+interface RequirementWithTasks {
+  requirementId: number;
+  tasks: Task[];
+}
 
 const SplitRequirementContainer = () => {
   // const history = useHistory();
@@ -12,6 +18,9 @@ const SplitRequirementContainer = () => {
   const requirements: Requirement[] = useSelector(
     (state: RootStateOrAny) => state.requirement.requirements
   );
+  const [requirementWithTasks, setRequirementWithTasks] = useState<
+    RequirementWithTasks[]
+  >([]);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [
     addTaskRequirement,
@@ -48,22 +57,80 @@ const SplitRequirementContainer = () => {
         </Card.Header>
         <Accordion.Collapse eventKey={index.toString()}>
           <Card.Body>
-            <p>No tasks have been created for this requirement yet</p>
-            <Button
-              variant="primary"
-              onClick={() => handleAddTaskButtonPressed(requirement)}
-            >
-              Add a New Task
-            </Button>
+            {getTaskListWithRequirementId(requirement.id).length > 0
+              ? displayTasks(requirement.id)
+              : getNoExistingTaskLayout(requirement)}
           </Card.Body>
         </Accordion.Collapse>
       </Card>
     );
   };
 
+  const displayTasks = (requirementId: number) => {
+    let tasks = getTaskListWithRequirementId(requirementId);
+    return (
+      <ListGroup horizontal>
+        {tasks.map((task: Task) => (
+          <Card
+            style={{
+              height: 100,
+              width: 120,
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: 10
+            }}
+          >
+            <text>{task.title}</text>
+          </Card>
+        ))}
+      </ListGroup>
+    );
+  };
+
+  const getTaskListWithRequirementId = (requirementId: number) => {
+    let result = requirementWithTasks.find(
+      (item: RequirementWithTasks) => item.requirementId == requirementId
+    );
+    return result ? result.tasks : [];
+  };
+
+  const getNoExistingTaskLayout = (requirement: Requirement) => {
+    return (
+      <>
+        <p>No tasks have been created for this requirement yet</p>
+        <Button
+          variant="primary"
+          onClick={() => handleAddTaskButtonPressed(requirement)}
+        >
+          Add a New Task
+        </Button>
+      </>
+    );
+  };
+
   const handleCloseModal = () => {
     setShowAddTaskModal(false);
   };
+
+  const handleRequirementCreated = (requirementId: number, newTask: Task) => {
+    let tempArr: RequirementWithTasks[] = [...requirementWithTasks];
+    let resultIndex = tempArr.findIndex(
+      (item: RequirementWithTasks) => item.requirementId == requirementId
+    );
+
+    if (resultIndex == -1) {
+      tempArr.push({ requirementId: requirementId, tasks: [newTask] });
+    } else {
+      let newTaskArr = [...tempArr[resultIndex].tasks, newTask];
+      tempArr[resultIndex] = { ...tempArr[resultIndex], tasks: newTaskArr };
+    }
+
+    setRequirementWithTasks(tempArr);
+  };
+
+  useEffect(() => {
+    console.log('requirementWithTasks', requirementWithTasks);
+  }, [requirementWithTasks]);
 
   return (
     <div className="SplitRequirementContainer">
@@ -76,6 +143,7 @@ const SplitRequirementContainer = () => {
         onClose={handleCloseModal}
         isVisible={showAddTaskModal}
         requirement={addTaskRequirement}
+        onRequirementCreated={handleRequirementCreated}
       />
     </div>
   );
