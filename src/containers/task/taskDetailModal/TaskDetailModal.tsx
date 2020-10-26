@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import {Task} from "../../../interfaces";
-import {Row, Col, Form} from "react-bootstrap";
+import {Row, Col, Form, Card} from "react-bootstrap";
 import "./style.scss";
 import {TaskStatus} from "../../../enums";
 import moment from "moment";
@@ -69,6 +69,34 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       );
   }
 
+  const renderCommentArea = () => {
+      return (
+          <Card>
+              <Card.Body>
+                  <Card.Subtitle className="mb-2 text-muted">
+                      <Form.Row>
+                          <Col className="label-username" xs={6}>Trevor Wong</Col>
+                          <Col className="label-comment-date" xs={6}>2020-10-27</Col>
+                      </Form.Row>
+                  </Card.Subtitle>
+                  <Card.Text>This task need to be on hold</Card.Text>
+              </Card.Body>
+          </Card>
+      );
+  }
+
+  const renderCommentField = () => {
+      return (
+          <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Comment</Form.Label>
+              { renderCommentArea() }
+              { renderCommentArea() }
+              { renderCommentArea() }
+              <Form.Control as="textarea" defaultValue={""} rows={4} placeholder={"Type your comment here..."}></Form.Control>
+          </Form.Group>
+      );
+  }
+
   useEffect(() => {
 
   }, []);
@@ -82,6 +110,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
             <Form>
                 { renderStatusRow() }
                 { renderDescriptionField() }
+                { renderCommentField() }
             </Form>
           </Modal.Body>
       </Modal>

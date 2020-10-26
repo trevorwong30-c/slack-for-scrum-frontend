@@ -7,6 +7,20 @@
     textarea {
       resize: none;
     }
+
+    .card + textarea, .card + .card
+    {
+      margin-top: 1rem;
+    }
+
+    .card {
+      .label-username {
+        text-align: left;
+      }
+      .label-comment-date {
+        text-align: right;
+      }
+    }
   }
 
 }
