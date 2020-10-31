@@ -1,3 +1,5 @@
+import {TaskStatus} from "../enums";
+
 export interface Requirement {
   id: number;
   title: string;
@@ -15,15 +17,33 @@ export interface Task {
   estimatedHour: number;
   remainingHour: number;
   historicalSpent: any;
-  status: number;
+  status: TaskStatus;
   assigneeId: number;
-  commentsHistory: any;
+  commentsHistory: Array<Comment>;
   createdAt: Date;
   endAt: Date;
+}
+
+export interface Comment {
+  userId: number
+  content: string
+  createdAt: Date;
 }
 
 export interface User {
   id: number;
   username: string;
   role: number;
+}
+
+interface State {
+  error: string;
+}
+
+export interface UserState extends State {
+  userList: Array<User>;
+  userMap: Record<number, User>; // A map to index the users by their ids
+  searchResults: Array<User>;
+  isSearching: boolean;
+  isLoadingUserList: boolean;
 }

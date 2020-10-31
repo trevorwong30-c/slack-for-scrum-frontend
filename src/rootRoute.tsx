@@ -7,6 +7,7 @@ import {
 import RequirementRoute from './routes/requirementRoute';
 import SprintRoute from './routes/sprintRoute';
 import TaskRoute from './routes/taskRoute';
+import UserRoute from './routes/userRoute';
 import React from 'react';
 
 const RootRoute = () => {
@@ -16,6 +17,7 @@ const RootRoute = () => {
         <Route path="/requirement" component={RequirementRoute}></Route>
         <Route path="/sprint" component={SprintRoute}></Route>
         <Route path="/task" component={TaskRoute}></Route>
+        <Route path="/user" component={UserRoute}></Route>
         <Route path="*">
           <Redirect to="/requirement" />
         </Route>

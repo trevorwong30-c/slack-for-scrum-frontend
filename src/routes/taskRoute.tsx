@@ -11,6 +11,9 @@ const TaskRoute = () => {
         <Route exact path={path}>
           <TaskListContainer />
         </Route>
+          <Route exact path={path}>
+            <TaskListContainer />
+          </Route>
       </Switch>
     </div>
   );
