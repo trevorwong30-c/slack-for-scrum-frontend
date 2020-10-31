@@ -1,6 +1,6 @@
 const createRequirementState = () => {
   return {
-    list: [],
+    requirements: [],
     error: ''
   };
 };

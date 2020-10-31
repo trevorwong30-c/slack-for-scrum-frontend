@@ -1,32 +1,37 @@
-import { Action, ThunkAction } from '@reduxjs/toolkit';
+import { ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import mockRequirementList from '../../mockReponses/requirement/requirementList.json';
+import { Requirement } from '../../interfaces';
+import { getRequirementList } from '../../services/requirementServices';
+import { parseRequirementResponse } from '../../parsers/requirementParser';
+
 export const LOAD_REQUIREMENT_LIST_SUCCESS = 'LOAD_REQUIREMENT_LIST_SUCCESS';
 export const LOAD_REQUIREMENT_LIST_FAIL = 'LOAD_REQUIREMENT_LIST_FAIL';
+
+export interface RequirementAction {
+  type: string;
+  requirements?: Requirement[];
+  error?: string;
+}
 
 export const loadRequirementList = (): ThunkAction<
   void,
   RootStateOrAny,
   unknown,
-  Action
+  RequirementAction
 > => {
-  return (dispatch) => {
-    // TODO:: Should integrate with axios
-    // const payload = require('../mockResponses/searchUserByKeyword.json');
-    const payload = mockRequirementList;
-    dispatch(loadRequirementListSuccess(payload.list));
-
-    // return axios.get(LOAD_REQUIREMENT_LIST_ENDPOINT).then((response) => {
-    //   console.log(`response`, response);
-    //   dispatch(loadRequirementListSuccess(response.list));
-    // });
+  return async (dispatch) => {
+    const response = await getRequirementList();
+    if (response) {
+      const requirements = parseRequirementResponse(response);
+      dispatch(loadRequirementListSuccess(requirements));
+    }
   };
 };
 
-export const loadRequirementListSuccess = (list: any) => {
+export const loadRequirementListSuccess = (requirements: Requirement[]) => {
   return {
     type: LOAD_REQUIREMENT_LIST_SUCCESS,
-    list
+    requirements
   };
 };
 

@@ -1,20 +1,26 @@
-{
-  "list": [
-    {
-      "iReq_ID": "1",
-      "sTitle": "sTitle 1",
-      "sDescription": "sDescription 1",
-      "iEstimated_effort": "iEstimated_effort 1",
-      "dCreatedAt": "dCreatedAt 1",
-      "dDueAt": "dDueAt 1"
-    },
-    {
-      "iReq_ID": "2",
-      "sTitle": "sTitle 2",
-      "sDescription": "sDescription 2",
-      "iEstimated_effort": "iEstimated_effort 2",
-      "dCreatedAt": "dCreatedAt 2",
-      "dDueAt": "dDueAt 2"
-    }
-  ]
-}
+[
+  {
+    "iReq_ID": "1",
+    "sTitle": "Requirement Title 1",
+    "sDescription": "Description 1",
+    "iEstimated_effort": 12,
+    "dCreatedAt": "2020-10-01T13:49:17+00:00",
+    "dDueAt": "2020-10-02T13:49:17+00:00"
+  },
+  {
+    "iReq_ID": "2",
+    "sTitle": "Requirement Title 2",
+    "sDescription": "Description 2",
+    "iEstimated_effort": 24,
+    "dCreatedAt": "2020-10-03T13:49:17+00:00",
+    "dDueAt": "2020-10-05T13:49:17+00:00"
+  },
+  {
+    "iReq_ID": "3",
+    "sTitle": "Requirement Title 3",
+    "sDescription": "Description 3",
+    "iEstimated_effort": 48,
+    "dCreatedAt": "2020-10-05T13:49:17+00:00",
+    "dDueAt": "2020-10-07T13:49:17+00:00"
+  }
+]
