@@ -1,10 +1,13 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
 import mockRequirementList from '../../mockReponses/requirement/requirementList.json';
-export const LOAD_REQUIREMENT_LIST_SUCCESS = 'LOAD_REQUIREMENT_LIST_SUCCESS';
-export const LOAD_REQUIREMENT_LIST_FAIL = 'LOAD_REQUIREMENT_LIST_FAIL';
+import {POST_COMMENT_ENDPOINT} from "../../services/taskServices";
+import axios from "axios";
+import {PostCommentRequestBody} from "../../interfaces/requestBody";
+export const POST_COMMENT_SUCCESS = 'POST_COMMENT_SUCCESS';
+export const POST_COMMENT_FAIL = 'POST_COMMENT_FAIL';
 
-export const loadRequirementList = (): ThunkAction<
+export const postComment = (comment:string): ThunkAction<
   void,
   RootStateOrAny,
   unknown,
@@ -13,26 +16,28 @@ export const loadRequirementList = (): ThunkAction<
   return (dispatch) => {
     // TODO:: Should integrate with axios
     // const payload = require('../mockResponses/searchUserByKeyword.json');
-    const payload = mockRequirementList;
-    dispatch(loadRequirementListSuccess(payload.list));
 
-    // return axios.get(LOAD_REQUIREMENT_LIST_ENDPOINT).then((response) => {
-    //   console.log(`response`, response);
-    //   dispatch(loadRequirementListSuccess(response.list));
-    // });
+    let data: PostCommentRequestBody = {
+      comment: comment
+    };
+
+    return axios.post(POST_COMMENT_ENDPOINT, data).then((response) => {
+      dispatch(postCommentSuccess());
+    }, (reason) => {
+      dispatch(postCommentFailure(reason));
+    });
   };
 };
 
-export const loadRequirementListSuccess = (list: any) => {
+export const postCommentSuccess = () => {
   return {
-    type: LOAD_REQUIREMENT_LIST_SUCCESS,
-    list
+    type: POST_COMMENT_SUCCESS
   };
 };
 
-export const loadRequirementListFailure = (error: any) => {
+export const postCommentFailure = (error: any) => {
   return {
-    type: LOAD_REQUIREMENT_LIST_FAIL,
+    type: POST_COMMENT_FAIL,
     error
   };
 };

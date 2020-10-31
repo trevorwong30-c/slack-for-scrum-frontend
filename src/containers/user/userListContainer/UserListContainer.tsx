@@ -2,10 +2,8 @@ import React, {Fragment, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import {User, UserState} from "../../../interfaces";
-import {Col, FormControl, InputGroup, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import {AsyncTypeahead} from 'react-bootstrap-typeahead';
 import {searchUserByKeyword} from "../../../redux/actions/searchUserByKeyword"; // ES2015
 import "./style.scss";
@@ -20,8 +18,6 @@ const UserListContainer = () => {
     );
 
     const dispatch = useDispatch();
-
-    const history = useHistory();
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -42,33 +38,6 @@ const UserListContainer = () => {
     }
 
     const onModalClosed = () => {};
-
-    const confirmRequirementList = () => {
-        // dispatch an API action here
-        history.push('/task');
-    };
-    //
-    // const renderRequirementList = () => {
-    //     let arr = [];
-    //
-    //     if (requirementState.list) {
-    //         for (let item of requirementState.list) {
-    //             arr.push(<li>{item.sDescription}</li>);
-    //         }
-    //
-    //         return (
-    //             <ul>
-    //                 <li>{arr}</li>
-    //             </ul>
-    //         );
-    //     }
-    // };
-    //
-    // const onRequirementListChanged = () => {
-    //     if (requirementState.list.length > 0) {
-    //         showModal();
-    //     }
-    // };
 
     const confirmUserList = () => {
 
@@ -135,7 +104,7 @@ const UserListContainer = () => {
                     {/*<Button variant="secondary" onClick={closeModal}>*/}
                     {/*  Close*/}
                     {/*</Button>*/}
-                    <Button variant="primary" onClick={confirmUserList} disabled={tmpUserList.length == 0}>
+                    <Button variant="primary" onClick={confirmUserList} disabled={tmpUserList.length === 0}>
                         Confirm Users
                     </Button>
                 </Modal.Footer>

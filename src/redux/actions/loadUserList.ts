@@ -1,12 +1,12 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import searchUserByKeywordList from '../../mockReponses/user/searchUserByKeyword.json';
+import userListResponse from '../../mockReponses/user/loadUserList.json';
 
-export const SEARCH_USER_BY_KEYWORD_START = 'SEARCH_USER_BY_KEYWORD_START';
-export const SEARCH_USER_BY_KEYWORD_SUCCESS = 'SEARCH_USER_BY_KEYWORD_SUCCESS';
-export const SEARCH_USER_BY_KEYWORD_FAIL = 'SEARCH_USER_BY_KEYWORD_FAIL';
+export const LOAD_USER_LIST_START = 'LOAD_USER_LIST_START';
+export const LOAD_USER_LIST_SUCCESS = 'LOAD_USER_LIST_SUCCESS';
+export const LOAD_USER_LIST_FAIL = 'LOAD_USER_LIST_FAIL';
 
-export const searchUserByKeyword = (keyword:string): ThunkAction<
+export const loadUserList = (): ThunkAction<
     void,
     RootStateOrAny,
     unknown,
@@ -14,13 +14,13 @@ export const searchUserByKeyword = (keyword:string): ThunkAction<
     > => {
     return (dispatch) => {
 
-        dispatch(searchUserByKeywordStart());
+        dispatch(loadUserListStart());
 
         // TODO:: Should integrate with axios
         // const payload = require('../mockResponses/searchUserByKeyword.json');
-        const payload = searchUserByKeywordList;
+        const payload = userListResponse;
 
-        dispatch(searchUserByKeywordSuccess(payload.list))
+        dispatch(loadUserListSuccess(payload.list))
 
         // return axios.get(LOAD_REQUIREMENT_LIST_ENDPOINT).then((response) => {
         //   console.log(`response`, response);
@@ -29,22 +29,22 @@ export const searchUserByKeyword = (keyword:string): ThunkAction<
     };
 };
 
-export const searchUserByKeywordStart = () => {
+export const loadUserListStart = () => {
     return {
-        type: SEARCH_USER_BY_KEYWORD_START
+        type: LOAD_USER_LIST_START
     }
 };
 
-export const searchUserByKeywordSuccess = (list: any) => {
+export const loadUserListSuccess = (list: any) => {
     return {
-        type: SEARCH_USER_BY_KEYWORD_SUCCESS,
+        type: LOAD_USER_LIST_SUCCESS,
         list
     };
 };
 
-export const searchUserByKeywordFail = (error: any) => {
+export const loadUserListFail = (error: any) => {
     return {
-        type: SEARCH_USER_BY_KEYWORD_FAIL,
+        type: LOAD_USER_LIST_FAIL,
         error
     };
 };

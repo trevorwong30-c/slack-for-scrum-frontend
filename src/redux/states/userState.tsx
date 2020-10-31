@@ -2,9 +2,11 @@ import {UserState} from "../../interfaces";
 
 const createUserState = (): UserState => {
   return {
-    users: [],
+    userList: [],
+    userMap: {},
     searchResults: [],
     isSearching: false,
+    isLoadingUserList: false,
     error: ''
   };
 };

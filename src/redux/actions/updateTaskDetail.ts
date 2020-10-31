@@ -1,20 +1,23 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import mockRequirementList from '../../mockReponses/requirement/requirementList.json';
-export const LOAD_REQUIREMENT_LIST_SUCCESS = 'LOAD_REQUIREMENT_LIST_SUCCESS';
-export const LOAD_REQUIREMENT_LIST_FAIL = 'LOAD_REQUIREMENT_LIST_FAIL';
+export const UPDATE_TASK_DETAIL_START = "UPDATE_TASK_DETAIL_START";
+export const UPDATE_TASK_DETAIL_SUCCESS = 'UPDATE_TASK_DETAIL_SUCCESS';
+export const UPDATE_TASK_DETAIL_FAIL = 'UPDATE_TASK_DETAIL_FAIL';
 
-export const loadRequirementList = (): ThunkAction<
+export const updateTaskDetail = (): ThunkAction<
   void,
   RootStateOrAny,
   unknown,
   Action
 > => {
   return (dispatch) => {
+
+    // dispatch(updateTaskDetailStart());
+
     // TODO:: Should integrate with axios
     // const payload = require('../mockResponses/searchUserByKeyword.json');
-    const payload = mockRequirementList;
-    dispatch(loadRequirementListSuccess(payload.list));
+    // const payload = mockRequirementList;
+    // dispatch(updateTaskDetailSuccess(payload.list));
 
     // return axios.get(LOAD_REQUIREMENT_LIST_ENDPOINT).then((response) => {
     //   console.log(`response`, response);
@@ -23,16 +26,22 @@ export const loadRequirementList = (): ThunkAction<
   };
 };
 
-export const loadRequirementListSuccess = (list: any) => {
+export const updateTaskDetailStart = (list: any) => {
   return {
-    type: LOAD_REQUIREMENT_LIST_SUCCESS,
+    type: UPDATE_TASK_DETAIL_START
+  };
+};
+
+export const updateTaskDetailSuccess = (list: any) => {
+  return {
+    type: UPDATE_TASK_DETAIL_SUCCESS,
     list
   };
 };
 
-export const loadRequirementListFailure = (error: any) => {
+export const updateTaskDetailFailure = (error: any) => {
   return {
-    type: LOAD_REQUIREMENT_LIST_FAIL,
+    type: UPDATE_TASK_DETAIL_FAIL,
     error
   };
 };

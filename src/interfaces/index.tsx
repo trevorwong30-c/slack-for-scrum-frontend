@@ -19,9 +19,15 @@ export interface Task {
   historicalSpent: any;
   status: TaskStatus;
   assigneeId: number;
-  commentsHistory: any;
+  commentsHistory: Array<Comment>;
   createdAt: Date;
   endAt: Date;
+}
+
+export interface Comment {
+  userId: number
+  content: string
+  createdAt: Date;
 }
 
 export interface User {
@@ -35,7 +41,9 @@ interface State {
 }
 
 export interface UserState extends State {
-  users: Array<User>;
+  userList: Array<User>;
+  userMap: Record<number, User>; // A map to index the users by their ids
   searchResults: Array<User>;
   isSearching: boolean;
+  isLoadingUserList: boolean;
 }
