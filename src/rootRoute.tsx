@@ -8,6 +8,7 @@ import RequirementRoute from './routes/requirementRoute';
 import SprintRoute from './routes/sprintRoute';
 import TaskRoute from './routes/taskRoute';
 import SplitRequirementRoute from './routes/splitRequirementRoute';
+import UserRoute from './routes/userRoute';
 import React from 'react';
 
 const RootRoute = () => {
@@ -18,6 +19,7 @@ const RootRoute = () => {
         <Route path="/sprint" component={SprintRoute}></Route>
         <Route path="/task" component={TaskRoute}></Route>
         <Route path="/splitRequirement" component={SplitRequirementRoute} />
+        <Route path="/user" component={UserRoute}></Route>
         <Route path="*">
           <Redirect to="/requirement" />
         </Route>
