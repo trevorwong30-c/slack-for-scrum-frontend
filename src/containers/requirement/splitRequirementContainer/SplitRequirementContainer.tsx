@@ -4,8 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import { Requirement } from '../../../interfaces';
-import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/createNewTaskModal';
+import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/CreateNewTaskModal';
 import { Task } from '../../../interfaces';
+import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
 
 interface RequirementWithTasks {
   requirementId: number;
@@ -22,6 +23,8 @@ const SplitRequirementContainer = () => {
     RequirementWithTasks[]
   >([]);
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [
     addTaskRequirement,
     setAddTaskRequirement
@@ -31,9 +34,25 @@ const SplitRequirementContainer = () => {
     dispatch(loadRequirementList());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (selectedTask) {
+      setShowTaskDetailsModal(true);
+    } else {
+      setShowTaskDetailsModal(false);
+    }
+  }, [selectedTask]);
+
   const handleAddTaskButtonPressed = (requirement: Requirement) => {
     setShowAddTaskModal(true);
     setAddTaskRequirement(requirement);
+  };
+
+  const handleTaskClicked = (task: Task) => {
+    setSelectedTask(task);
+  };
+
+  const handleTaskDetailsModalClosed = () => {
+    setSelectedTask(undefined);
   };
 
   const getRequirementAccordion = (requirement: Requirement, index: number) => {
@@ -79,6 +98,7 @@ const SplitRequirementContainer = () => {
               alignItems: 'center',
               margin: 10
             }}
+            onClick={() => handleTaskClicked(task)}
           >
             <text>{task.title}</text>
           </Card>
@@ -144,6 +164,11 @@ const SplitRequirementContainer = () => {
         isVisible={showAddTaskModal}
         requirement={addTaskRequirement}
         onRequirementCreated={handleRequirementCreated}
+      />
+      <TaskDetailModal
+        show={showTaskDetailsModal}
+        task={selectedTask}
+        onHide={handleTaskDetailsModalClosed}
       />
     </div>
   );
