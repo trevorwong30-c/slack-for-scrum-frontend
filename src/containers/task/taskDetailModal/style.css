@@ -1,0 +1,47 @@
+@media (min-width: 850px) {
+  .TaskDetailModal .modal-dialog {
+    max-width: 750px;
+  }
+  .TaskDetailModal textarea {
+    resize: none;
+  }
+  .TaskDetailModal .card + textarea, .TaskDetailModal .card + .card {
+    margin-top: 1rem;
+  }
+  .TaskDetailModal .card .label-username {
+    text-align: left;
+  }
+  .TaskDetailModal .card .label-comment-date {
+    text-align: right;
+  }
+  .TaskDetailModal .comment-area, .TaskDetailModal .description-textarea {
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+  .TaskDetailModal .comment-area::-webkit-scrollbar, .TaskDetailModal .description-textarea::-webkit-scrollbar {
+    width: 10px;
+  }
+  .TaskDetailModal .comment-area::-webkit-scrollbar-track, .TaskDetailModal .description-textarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb, .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb:hover, .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .TaskDetailModal .comment-area {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px 10px 10px 0;
+  }
+  .TaskDetailModal .comment-area + textarea {
+    margin-top: 10px;
+  }
+  .TaskDetailModal .form-buttons {
+    text-align: right;
+  }
+}
+/*# sourceMappingURL=style.css.map */

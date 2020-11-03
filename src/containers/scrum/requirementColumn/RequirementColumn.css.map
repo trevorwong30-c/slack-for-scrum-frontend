@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAA;EACd,gBAAgB,EAAE,IAAI;EACtB,aAAa,EAAE,GAAG;CACrB",
+    "sources": [
+        "RequirementColumn.scss"
+    ],
+    "names": [],
+    "file": "RequirementColumn.css"
+}

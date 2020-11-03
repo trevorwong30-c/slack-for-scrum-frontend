@@ -1,0 +1,29 @@
+.taskBlockContainer {
+  padding: 5px 0;
+  max-width: 450px;
+}
+
+.taskBlockContainer .taskBlock {
+  width: 100%;
+  border: 1px rgba(0, 0, 0, 0.1) solid;
+  -webkit-box-shadow: 0 1px 3px 0 var(--callout-shadow-color, rgba(0, 0, 0, 0.132));
+          box-shadow: 0 1px 3px 0 var(--callout-shadow-color, rgba(0, 0, 0, 0.132));
+  background-color: white;
+  padding: 5px;
+  cursor: default;
+}
+
+.taskBlockContainer .taskBlock .burger {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.taskBlockContainer .taskBlock .burger div {
+  width: 15px;
+  height: 3px;
+  background-color: black;
+  margin-bottom: 1px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=TaskBlock.css.map */
