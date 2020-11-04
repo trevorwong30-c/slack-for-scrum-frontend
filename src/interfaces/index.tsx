@@ -1,32 +1,32 @@
-import {TaskStatus} from "../enums";
+import { TaskStatus } from '../enums';
 
 export interface Requirement {
   id: number;
   title: string;
   description: string;
   estimatedEffort: number;
-  createdAt: Date;
-  dueAt: Date;
+  createdAt: string;
+  dueAt: string;
 }
 
 export interface Task {
-  id: number;
-  reqId: number;
-  title: string;
-  description: string;
-  estimatedHour: number;
-  remainingHour: number;
-  historicalSpent: any;
-  status: TaskStatus;
-  assigneeId: number;
-  commentsHistory: Array<Comment>;
-  createdAt: Date;
-  endAt: Date;
+  id?: number;
+  reqId?: number;
+  title?: string;
+  description?: string;
+  estimatedHour?: number;
+  remainingHour?: number;
+  historicalSpent?: any;
+  status?: TaskStatus;
+  assigneeId?: number;
+  commentsHistory?: Array<Comment>;
+  createdAt?: Date;
+  endAt?: Date;
 }
 
 export interface Comment {
-  userId: number
-  content: string
+  userId: number;
+  content: string;
   createdAt: Date;
 }
 
