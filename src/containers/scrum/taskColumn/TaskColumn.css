@@ -1,0 +1,57 @@
+.columnContainer {
+  height: 80%;
+  -webkit-box-flex: 33.33%;
+      -ms-flex: 33.33%;
+          flex: 33.33%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-right: 1px lightgray solid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.columnContainer:last-child {
+  border-right: none;
+}
+
+.columnContainer .columnTitle {
+  text-align: center;
+}
+
+.columnContainer .columnContent {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 5px;
+  background-color: white;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+}
+
+.columnContainer .columnContent.isDragging {
+  background-color: lightgray;
+}
+
+.requirementColumn {
+  margin-bottom: 5px;
+}
+
+.requirementColumn .columnContent {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 5px;
+  background-color: white;
+  -webkit-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+}
+
+.requirementColumn .columnContent.isDragging {
+  background-color: lightgray;
+}
+/*# sourceMappingURL=TaskColumn.css.map */

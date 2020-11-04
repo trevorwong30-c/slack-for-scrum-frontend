@@ -1,0 +1,35 @@
+.columnContainer {
+    height: 80%;
+    flex: 33.33%;
+    box-sizing: border-box;
+    border-right: 1px lightgray solid;
+    display: flex;
+    flex-direction: column;
+    &:last-child {
+        border-right: none;
+    }
+    .columnTitle {
+        text-align: center;
+    }
+    .columnContent {
+        flex-grow: 1;
+        padding: 5px;
+        background-color: white;
+        transition: background-color 0.5s ease;
+        &.isDragging {
+            background-color: lightgray;
+        }
+    }
+}
+.requirementColumn{
+    margin-bottom: 5px;
+    .columnContent {
+        flex-grow: 1;
+        padding: 5px;
+        background-color: white;
+        transition: background-color 0.5s ease;
+        &.isDragging {
+            background-color: lightgray;
+        }
+    }
+}
