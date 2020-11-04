@@ -25,7 +25,7 @@ function TaskBlock(props:any) {
                             <div></div>
                         </div>
                         <div>
-                            Test task
+                            {props.children}
                         </div>
 					</div>
 				</div>

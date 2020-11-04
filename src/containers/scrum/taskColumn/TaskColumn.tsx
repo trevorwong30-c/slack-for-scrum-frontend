@@ -5,33 +5,40 @@ import TaskBlock from "../taskBlock/TaskBlock";
 import "./TaskColumn.css"
 
 function TaskColumn(props:any) {
-    
-    return (
-        <div className='columnContainer'>
-			<div className='columnTitle'>{props.taskColumn.columnTitle}</div>
+    let containerClassName:string = "requirementColumn";
+    let droppableId:string = "requirementColumn";
 
-			<Droppable droppableId={props.taskColumn.columnId} type='Task' direction='vertical'>
-				{(provided, snapshot) => (
-					<div
-						ref={provided.innerRef}
-						className={`columnContent ${
-							snapshot.isDraggingOver ? "isDragging" : ""
-						}`}
-						{...provided.droppableProps}>
-						{props.taskList.map((task:any, index:number) => (
-							<TaskBlock
-                                key={`${props.taskColumn.columnTitle}-Task-${index}`}
-								columnName={props.taskColumn.columnId}
-								task={task}
-								index={index}
-							/>
-						))}
-						{provided.placeholder}
-					</div>
-				)}
-			</Droppable>
-		</div>
-    );
+    if (props.columnType === "scrumBoard") {
+        containerClassName = "columnContainer";
+        droppableId = props.taskColumn.columnId;
+    }
+    else {
+        containerClassName = "requirementColumn";
+        droppableId = `Requirement-${props.requirementColumn.iReq_ID}-column`;
+    }
+
+    return (
+        <div className={containerClassName}>
+            {props.columnType === "scrumBoard"?
+                <div className='columnTitle'>
+                    {props.taskColumn.columnTitle}
+                </div>
+            :<></>}
+            <Droppable droppableId={droppableId} type='Task' direction='vertical'>
+                {(provided, snapshot) => (
+                    <div
+                        ref={provided.innerRef}
+                        className={`columnContent ${
+                            snapshot.isDraggingOver ? "isDragging" : ""
+                        }`}
+                        {...provided.droppableProps}>
+                        {props.children}
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>
+        </div>
+    )
 }
 
 export default TaskColumn;

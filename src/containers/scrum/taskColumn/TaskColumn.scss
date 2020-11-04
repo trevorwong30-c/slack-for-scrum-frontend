@@ -21,3 +21,15 @@
         }
     }
 }
+.requirementColumn{
+    margin-bottom: 5px;
+    .columnContent {
+        flex-grow: 1;
+        padding: 5px;
+        background-color: white;
+        transition: background-color 0.5s ease;
+        &.isDragging {
+            background-color: lightgray;
+        }
+    }
+}
