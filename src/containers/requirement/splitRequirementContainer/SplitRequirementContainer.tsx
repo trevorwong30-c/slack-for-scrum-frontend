@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Accordion, Card, Modal, ListGroup } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import { Requirement } from '../../../interfaces';
 import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/CreateNewTaskModal';
 import { Task } from '../../../interfaces';
 import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
+import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
+import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
+import { DragDropContext } from 'react-beautiful-dnd';
+import './styles.css';
 
 interface RequirementWithTasks {
   requirementId: number;
@@ -77,7 +80,7 @@ const SplitRequirementContainer = () => {
         <Accordion.Collapse eventKey={index.toString()}>
           <Card.Body>
             {getTaskListWithRequirementId(requirement.id).length > 0
-              ? displayTasks(requirement.id)
+              ? displayTasks(requirement)
               : getNoExistingTaskLayout(requirement)}
           </Card.Body>
         </Accordion.Collapse>
@@ -85,25 +88,33 @@ const SplitRequirementContainer = () => {
     );
   };
 
-  const displayTasks = (requirementId: number) => {
-    let tasks = getTaskListWithRequirementId(requirementId);
+  const onDragEnd = () => {
+    console.log('tester');
+  };
+
+  const displayTasks = (requirement: Requirement) => {
+    let tasks = getTaskListWithRequirementId(requirement.id);
+    console.log('wahahah');
     return (
-      <ListGroup horizontal>
-        {tasks.map((task: Task) => (
-          <Card
-            style={{
-              height: 100,
-              width: 120,
-              justifyContent: 'center',
-              alignItems: 'center',
-              margin: 10
-            }}
-            onClick={() => handleTaskClicked(task)}
-          >
-            <text>{task.title}</text>
-          </Card>
-        ))}
-      </ListGroup>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <TaskColumn
+          key={requirement.id}
+          requirementColumn={requirement}
+          columnType={'requirementColumn'}
+        >
+          {tasks.map((task: Task, index: number) => {
+            return (
+              <TaskBlock
+                key={`${requirement.id}-Task-${index}`}
+                columnName={requirement.id}
+                index={index}
+              >
+                {task.title}
+              </TaskBlock>
+            );
+          })}
+        </TaskColumn>
+      </DragDropContext>
     );
   };
 
@@ -153,7 +164,7 @@ const SplitRequirementContainer = () => {
   }, [requirementWithTasks]);
 
   return (
-    <div className="SplitRequirementContainer">
+    <div className="splitRequirementContainer">
       <Accordion style={{ width: '50%' }}>
         {requirements.map((requirement: Requirement, index: number) =>
           getRequirementAccordion(requirement, index)

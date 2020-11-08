@@ -1,0 +1,10 @@
+.draggableArea {
+    display: flex;
+	height: 100%;
+    background-color: red;
+    font-size: xx-large;
+}
+.taskCard {
+    height:100;
+    width:100;
+}
