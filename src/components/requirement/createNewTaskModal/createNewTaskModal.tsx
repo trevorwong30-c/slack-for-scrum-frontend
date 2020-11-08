@@ -28,7 +28,7 @@ const CreateNewTaskModal = ({
 
   useEffect(() => {
     dispatch(loadUserList());
-  }, []);
+  }, [dispatch]);
 
   const createNewTask = () => {
     if (requirement) {

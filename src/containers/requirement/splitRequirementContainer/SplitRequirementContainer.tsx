@@ -43,7 +43,7 @@ const SplitRequirementContainer = ({
     if (addTaskRequirement?.id) {
       dispatch(getTasksWithReqId(addTaskRequirement.id));
     }
-  }, [addTaskRequirement]);
+  }, [addTaskRequirement, dispatch]);
 
   useEffect(() => {
     if (selectedTask) {
@@ -128,6 +128,8 @@ const SplitRequirementContainer = ({
               </TaskBlock>
             );
           }
+
+          return <></>;
         })}
       </TaskColumn>
     );
