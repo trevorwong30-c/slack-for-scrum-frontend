@@ -1,0 +1,58 @@
+[
+    {
+        "iTask_ID": 1,
+        "iReq_ID": 1,
+        "sTitle": "Task001",
+        "sDescription": "This is Task001",
+        "iEstimated_effort": 12,
+        "iRemaining_hour": 2,
+        "jHistorical_spent": "",
+        "iStatus": 0,
+        "iAssignee": 1,
+        "jComments_history": [],
+        "dCreatedAt": "2020-11-08 15:00",
+        "dEndAt": "2020-11-08 15:00"
+    },
+    {
+        "iTask_ID": 2,
+        "iReq_ID": 1,
+        "sTitle": "Task002",
+        "sDescription": "This is Task002",
+        "iEstimated_effort": 12,
+        "iRemaining_hour": 2,
+        "jHistorical_spent": "",
+        "iStatus": 0,
+        "iAssignee": 1,
+        "jComments_history": [],
+        "dCreatedAt": "2020-11-08 15:00",
+        "dEndAt": "2020-11-08 15:00"
+    },
+    {
+        "iTask_ID": 3,
+        "iReq_ID": 2,
+        "sTitle": "Task003",
+        "sDescription": "This is Task003",
+        "iEstimated_effort": 12,
+        "iRemaining_hour": 2,
+        "jHistorical_spent": "",
+        "iStatus": 0,
+        "iAssignee": 1,
+        "jComments_history": [],
+        "dCreatedAt": "2020-11-08 15:00",
+        "dEndAt": "2020-11-08 15:00"
+    },
+    {
+        "iTask_ID": 4,
+        "iReq_ID": 2,
+        "sTitle": "Task004",
+        "sDescription": "This is Task004",
+        "iEstimated_effort": 12,
+        "iRemaining_hour": 2,
+        "jHistorical_spent": "",
+        "iStatus": 0,
+        "iAssignee": 1,
+        "jComments_history": [],
+        "dCreatedAt": "2020-11-08 15:00",
+        "dEndAt": "2020-11-08 15:00"
+    }
+]

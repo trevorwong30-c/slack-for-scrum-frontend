@@ -6,6 +6,7 @@ import TaskColumn from '../taskColumn/TaskColumn';
 import TaskBlock from "../taskBlock/TaskBlock";
 
 import './scrumBoard.css';
+import SplitRequirementContainer from 'containers/requirement/splitRequirementContainer/SplitRequirementContainer';
 
 function ScrumBoard(props: any) {
 
@@ -187,30 +188,16 @@ function ScrumBoard(props: any) {
   const onDragEnd = () => {
     console.log('tester');
   };
+
+  const getRequirementList = () =>{
+
+  }
+
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
         <div className="requirementColumnContainer">
-            {requirementList.map((requirementColumn, index) => (
-                <TaskColumn
-                    key={requirementColumn.iReq_ID}
-                    requirementColumn={requirementColumn}
-                    columnType={"requirement"}
-                >
-                    {taskList.map((task, index)=>{
-                        if(task.iStatus === 0 && task.iReq_ID === requirementColumn.iReq_ID){
-                            return (
-                                <TaskBlock
-                                    key={`${requirementColumn.iReq_ID}-Task-${index}`}
-                                    columnName={requirementColumn.iReq_ID}
-                                    index={index}
-                                >
-                                    Tester
-                                </TaskBlock>
-                            )
-                        }
-                    })}
-                </TaskColumn>
-            ))}
+            <SplitRequirementContainer/>
         </div>
         <div className="scrumBoard">
             {taskColumnList.map((taskColumn, index) => (
@@ -227,7 +214,7 @@ function ScrumBoard(props: any) {
                                     columnName={taskColumn.columnId}
                                     index={index}
                                 >
-                                    Tester
+                                    {`Tester${index}`}
                                 </TaskBlock>
                             )
                         }
