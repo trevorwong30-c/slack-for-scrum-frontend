@@ -109,7 +109,7 @@ const SplitRequirementContainer = () => {
                 columnName={requirement.id}
                 index={index}
               >
-                {task.title}
+                <div onClick={()=>handleTaskClicked(task)}>{task.title}</div>
               </TaskBlock>
             );
           })}
