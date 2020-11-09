@@ -81,9 +81,10 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Label>Status</Form.Label>
         <Form.Control
           as="select"
-          defaultValue={TaskStatus.ToDo}
+          defaultValue={formData?.status}
           onChange={onStatusChanged}
         >
+          <option value={TaskStatus.NotSpecified}>Not Specified</option>
           <option value={TaskStatus.ToDo}>To Do</option>
           <option value={TaskStatus.InProgress}>In Progress</option>
           <option value={TaskStatus.Done}>Done</option>
@@ -118,7 +119,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   const renderCommentArea = () => {
-    if (!task?.commentsHistory) {
+    if (!task?.commentsHistory || task?.commentsHistory.length <= 0) {
       return;
     }
 
@@ -180,6 +181,10 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     console.log(`formData Changed`, formData);
   }, [formData]);
 
+  useEffect(() => {
+    setFormData(task);
+  }, [show]);
+
   return (
     <Modal
       className={`TaskDetailModal ${className}`}
@@ -207,7 +212,7 @@ interface TaskDetailModalProps {
   className?: string;
   show?: boolean;
   onHide?: Function;
-  task: Task | undefined;
+  task?: Task;
 }
 
 export default TaskDetailModal;

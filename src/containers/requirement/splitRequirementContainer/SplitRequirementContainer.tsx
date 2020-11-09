@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import { Requirement } from '../../../interfaces';
-import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/CreateNewTaskModal';
 import { Task } from '../../../interfaces';
 import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
+import CreateNewTaskModal from "../../../components/requirement/createNewTaskModal/createNewTaskModal";
 
 interface RequirementWithTasks {
   requirementId: number;
