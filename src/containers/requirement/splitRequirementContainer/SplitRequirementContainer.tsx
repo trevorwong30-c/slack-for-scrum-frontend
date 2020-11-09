@@ -124,7 +124,7 @@ const SplitRequirementContainer = ({
                 index={index}
               >
                 {/*TODO real task card object */}
-                <div onClick={() => handleTaskClicked(task)}>#{task.id} {task.title}</div>
+                <div className="task-detail-modal-trigger" onClick={() => handleTaskClicked(task)}>#{task.id} {task.title}</div>
               </TaskBlock>
             );
           }

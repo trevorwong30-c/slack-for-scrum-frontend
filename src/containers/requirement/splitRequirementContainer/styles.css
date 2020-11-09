@@ -4,3 +4,7 @@
     text-align: center;
     align-items: center;
 }
+
+.task-detail-modal-trigger {
+    cursor: pointer;
+}
