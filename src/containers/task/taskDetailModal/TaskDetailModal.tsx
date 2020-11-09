@@ -7,6 +7,7 @@ import './style.scss';
 import { TaskStatus } from '../../../enums';
 import moment from 'moment';
 import { updateTaskDetail } from '../../../redux/actions/updateTaskDetail';
+import {postComment} from "../../../redux/actions/postComment";
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -14,6 +15,8 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   const { className, show, onHide, task } = props;
 
   const [formData, setFormData] = useState(task);
+
+  const [inputComment, setInputComment] = useState<string>("");
 
   const { userMap } = useSelector((state: RootStateOrAny) => state.user);
 
@@ -39,6 +42,21 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       description: e.target.value
     });
   };
+
+  const onEstimatedHoursChanged = (e: any) => {
+    setFormData({
+      ...formData,
+      estimatedHour: e.target.value
+    });
+  }
+
+  const onCommentChanged = (e: any) => {
+    setInputComment(e.target.value);
+  }
+
+  const submitComment = () => {
+    dispatch(postComment(Number(task?.id), inputComment));
+  }
 
   const saveTask = () => {
     dispatch(updateTaskDetail());
@@ -76,6 +94,24 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       </Form.Group>
     );
   };
+
+  const renderEstimatedHoursField = () => {
+    return (
+        <Form.Row>
+          <Col xs={6}>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Estimated No. of Hours</Form.Label>
+              <Form.Control
+                  type="number"
+                  value={formData?.estimatedHour}
+                  onChange={onEstimatedHoursChanged}
+              >
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Form.Row>
+    );
+  }
 
   const renderStatusField = () => {
 
@@ -159,12 +195,18 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Comments</Form.Label>
         {renderCommentArea()}
-        <Form.Control
-          as="textarea"
-          defaultValue={''}
-          rows={4}
-          placeholder={'Type your comment here...'}
-        ></Form.Control>
+        <div className="comment-input-wrapper">
+          <Form.Control
+              as="textarea"
+              defaultValue={''}
+              value={inputComment}
+              rows={4}
+              placeholder={'Type your comment here...'}
+              onChange={onCommentChanged}
+          >
+          </Form.Control>
+          <Button className={`button-submit-comment ${inputComment.trim() == "" ? "empty" : ""}`} variant="secondary" size="sm" onClick={submitComment}>Send!</Button>
+        </div>
       </Form.Group>
     );
   };
@@ -197,6 +239,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       <Modal.Body>
         <Form>
           {renderStatusRow()}
+          {renderEstimatedHoursField()}
           {renderDescriptionField()}
           {renderCommentField()}
           {renderFormButtons()}

@@ -7,7 +7,7 @@ import {PostCommentRequestBody} from "../../interfaces/requestBody";
 export const POST_COMMENT_SUCCESS = 'POST_COMMENT_SUCCESS';
 export const POST_COMMENT_FAIL = 'POST_COMMENT_FAIL';
 
-export const postComment = (comment:string): ThunkAction<
+export const postComment = (taskId: number, comment:string): ThunkAction<
   void,
   RootStateOrAny,
   unknown,
@@ -17,15 +17,15 @@ export const postComment = (comment:string): ThunkAction<
     // TODO:: Should integrate with axios
     // const payload = require('../mockResponses/searchUserByKeyword.json');
 
-    let data: PostCommentRequestBody = {
-      comment: comment
-    };
-
-    return axios.post(POST_COMMENT_ENDPOINT, data).then((response) => {
-      dispatch(postCommentSuccess());
-    }, (reason) => {
-      dispatch(postCommentFailure(reason));
-    });
+    // let data: PostCommentRequestBody = {
+    //   comment: comment
+    // };
+    //
+    // return axios.post(POST_COMMENT_ENDPOINT, data).then((response) => {
+    //   dispatch(postCommentSuccess());
+    // }, (reason) => {
+    //   dispatch(postCommentFailure(reason));
+    // });
   };
 };
 

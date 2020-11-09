@@ -244,7 +244,7 @@ function ScrumBoard(props: any) {
                                     columnName={taskColumn.columnId}
                                     index={index}
                                 >
-                                    <div onClick={() => showTaskDetailModal(task)}>#{task.id} {task.title}</div>
+                                    <div className="task-detail-modal-trigger" onClick={() => showTaskDetailModal(task)}>#{task.id} {task.title}</div>
                                 </TaskBlock>
                             )
                         }
