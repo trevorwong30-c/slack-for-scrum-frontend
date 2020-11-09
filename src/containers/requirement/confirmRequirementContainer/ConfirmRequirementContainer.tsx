@@ -35,7 +35,7 @@ const ConfirmRequirementContainer = () => {
 
   const confirmRequirementList = () => {
     // dispatch an API action here
-    history.push('/splitRequirement');
+    history.push('/scrum');
   };
 
   const renderListItems = () => {
