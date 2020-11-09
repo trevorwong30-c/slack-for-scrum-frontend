@@ -50,9 +50,11 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Label>Assignee</Form.Label>
         <Form.Control
           as="select"
-          defaultValue={formData?.assigneeId}
+          defaultValue={0}
+          value={formData?.assigneeId}
           onChange={onAssigneeChanged}
         >
+          <option value={0}>Not Assigned</option>
           {Object.keys(userMap).map((userId) => {
             const user = userMap[userId];
             return <option value={user.id}>{user.username}</option>;
@@ -76,12 +78,14 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   const renderStatusField = () => {
+
     return (
       <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Status</Form.Label>
         <Form.Control
           as="select"
-          defaultValue={formData?.status}
+          defaultValue={TaskStatus.NotSpecified}
+          value={formData?.status as TaskStatus}
           onChange={onStatusChanged}
         >
           <option value={TaskStatus.NotSpecified}>Not Specified</option>
@@ -174,12 +178,6 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       </Col>
     );
   };
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    console.log(`formData Changed`, formData);
-  }, [formData]);
 
   useEffect(() => {
     setFormData(task);

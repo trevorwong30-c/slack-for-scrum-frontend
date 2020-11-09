@@ -12,6 +12,7 @@ import {TaskStatus} from "../../../enums";
 import moment from "moment";
 import {loadUserList} from "../../../redux/actions/loadUserList";
 import {useDispatch} from "react-redux";
+import SplitRequirementContainer from 'containers/requirement/splitRequirementContainer/SplitRequirementContainer';
 
 function ScrumBoard(props: any) {
 
@@ -117,7 +118,7 @@ function ScrumBoard(props: any) {
             remainingHour: 100,
             historicalSpent: {},
             status: TaskStatus.Done,
-            assigneeId: 0,
+            assigneeId: 2,
             commentsHistory: [],
             createdAt: moment("2020-10-10").toDate(),
             endAt: moment("2020-10-10").toDate()
@@ -210,65 +211,50 @@ function ScrumBoard(props: any) {
         setIsTaskDetailModalVisible(false);
     };
 
-    const onDragEnd = () => {
-        console.log('tester');
-    };
-
     useEffect(() => {
         dispatch(loadUserList());
     }, []);
 
-    return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <div className="requirementColumnContainer">
-                {requirementList.map((requirementColumn, index) => (
-                    <TaskColumn
-                        key={requirementColumn.iReq_ID}
-                        requirementColumn={requirementColumn}
-                        columnType={"requirement"}
-                    >
-                        {taskList.map((task, index) => {
-                            if (task.status === TaskStatus.NotSpecified && task.reqId === requirementColumn.iReq_ID) {
-                                return (
-                                    <TaskBlock
-                                        key={`${requirementColumn.iReq_ID}-Task-${index}`}
-                                        columnName={requirementColumn.iReq_ID}
-                                        index={index}
-                                    >
-                                        Tester
-                                    </TaskBlock>
-                                )
-                            }
-                        })}
-                    </TaskColumn>
-                ))}
-            </div>
-            <div className="scrumBoard">
-                {taskColumnList.map((taskColumn, index) => (
-                    <TaskColumn
-                        key={taskColumn.columnId}
-                        taskColumn={taskColumn}
-                        columnType={"scrumBoard"}
-                    >
-                        {taskList.map((task, index) => {
-                            if (taskColumn.StatusId === task.status) {
-                                return (
-                                    <TaskBlock
-                                        key={`${taskColumn.columnId}-Task-${index}`}
-                                        columnName={taskColumn.columnId}
-                                        index={index}
-                                    >
-                                        <div onClick={() => showTaskDetailModal(task)}>{task.title}</div>
-                                    </TaskBlock>
-                                )
-                            }
-                        })}
-                    </TaskColumn>
-                ))}
-            </div>
-            <TaskDetailModal show={isTaskDetailModalVisible} onHide={onTaskDetailModalClosed} task={selectedTask} />
-        </DragDropContext>
-    );
+  const onDragEnd = () => {
+    console.log('tester');
+  };
+
+  const getRequirementList = () =>{
+
+  }
+
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+        <div className="requirementColumnContainer">
+            <SplitRequirementContainer/>
+        </div>
+        <div className="scrumBoard">
+            {taskColumnList.map((taskColumn, index) => (
+                <TaskColumn
+                    key={taskColumn.columnId}
+                    taskColumn={taskColumn}
+                    columnType={"scrumBoard"}
+                >
+                    {taskList.map((task, index)=>{
+                        if(taskColumn.StatusId === task.status){
+                            return (
+                                <TaskBlock
+                                    key={`${taskColumn.columnId}-Task-${index}`}
+                                    columnName={taskColumn.columnId}
+                                    index={index}
+                                >
+                                    <div onClick={() => showTaskDetailModal(task)}>#{task.id} {task.title}</div>
+                                </TaskBlock>
+                            )
+                        }
+                    })}
+                </TaskColumn>
+            ))}
+        </div>
+        <TaskDetailModal task={selectedTask} show={isTaskDetailModalVisible} onHide={onTaskDetailModalClosed} />
+    </DragDropContext>
+  );
 }
 
 export default ScrumBoard;
