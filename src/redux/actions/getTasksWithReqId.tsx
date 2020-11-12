@@ -20,9 +20,11 @@ export const getTasksWithReqId = (
   return async (dispatch) => {
     try {
       const res = await getTasks(reqId);
-      if (res) {
-        const tasks = parseTasksReponse(res);
+      if (res && res.success) {
+        const tasks = parseTasksReponse(res.payload);
         dispatch(getTasksWithReqIdSuccess(tasks));
+      } else {
+        dispatch(getTasksWithReqIdFailed(res.message));
       }
     } catch (err) {
       dispatch(getTasksWithReqIdFailed(err));
