@@ -7,6 +7,7 @@ import './style.scss';
 import { TaskStatus } from '../../../enums';
 import moment from 'moment';
 import { updateTaskDetail } from '../../../redux/actions/updateTaskDetail';
+import {postComment} from "../../../redux/actions/postComment";
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -14,6 +15,8 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   const { className, show, onHide, task } = props;
 
   const [formData, setFormData] = useState(task);
+
+  const [inputComment, setInputComment] = useState<string>("");
 
   const { userMap } = useSelector((state: RootStateOrAny) => state.user);
 
@@ -40,6 +43,21 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     });
   };
 
+  const onEstimatedHoursChanged = (e: any) => {
+    setFormData({
+      ...formData,
+      estimatedHour: e.target.value
+    });
+  }
+
+  const onCommentChanged = (e: any) => {
+    setInputComment(e.target.value);
+  }
+
+  const submitComment = () => {
+    dispatch(postComment(Number(task?.id), inputComment));
+  }
+
   const saveTask = () => {
     dispatch(updateTaskDetail());
   };
@@ -50,9 +68,11 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Label>Assignee</Form.Label>
         <Form.Control
           as="select"
-          defaultValue={formData?.assigneeId}
+          defaultValue={0}
+          value={formData?.assigneeId}
           onChange={onAssigneeChanged}
         >
+          <option value={0}>Not Assigned</option>
           {Object.keys(userMap).map((userId) => {
             const user = userMap[userId];
             return <option value={user.id}>{user.username}</option>;
@@ -75,15 +95,36 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     );
   };
 
+  const renderEstimatedHoursField = () => {
+    return (
+        <Form.Row>
+          <Col xs={6}>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Estimated No. of Hours</Form.Label>
+              <Form.Control
+                  type="number"
+                  value={formData?.estimatedHour}
+                  onChange={onEstimatedHoursChanged}
+              >
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Form.Row>
+    );
+  }
+
   const renderStatusField = () => {
+
     return (
       <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Status</Form.Label>
         <Form.Control
           as="select"
-          defaultValue={TaskStatus.ToDo}
+          defaultValue={TaskStatus.NotSpecified}
+          value={formData?.status as TaskStatus}
           onChange={onStatusChanged}
         >
+          <option value={TaskStatus.NotSpecified}>Not Specified</option>
           <option value={TaskStatus.ToDo}>To Do</option>
           <option value={TaskStatus.InProgress}>In Progress</option>
           <option value={TaskStatus.Done}>Done</option>
@@ -118,7 +159,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   const renderCommentArea = () => {
-    if (!task?.commentsHistory) {
+    if (!task?.commentsHistory || task?.commentsHistory.length <= 0) {
       return;
     }
 
@@ -154,12 +195,18 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Comments</Form.Label>
         {renderCommentArea()}
-        <Form.Control
-          as="textarea"
-          defaultValue={''}
-          rows={4}
-          placeholder={'Type your comment here...'}
-        ></Form.Control>
+        <div className="comment-input-wrapper">
+          <Form.Control
+              as="textarea"
+              defaultValue={''}
+              value={inputComment}
+              rows={4}
+              placeholder={'Type your comment here...'}
+              onChange={onCommentChanged}
+          >
+          </Form.Control>
+          <Button className={`button-submit-comment ${inputComment.trim() == "" ? "empty" : ""}`} variant="secondary" size="sm" onClick={submitComment}>Send!</Button>
+        </div>
       </Form.Group>
     );
   };
@@ -174,11 +221,9 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     );
   };
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
-    console.log(`formData Changed`, formData);
-  }, [formData]);
+    setFormData(task);
+  }, [show]);
 
   return (
     <Modal
@@ -194,6 +239,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
       <Modal.Body>
         <Form>
           {renderStatusRow()}
+          {renderEstimatedHoursField()}
           {renderDescriptionField()}
           {renderCommentField()}
           {renderFormButtons()}
@@ -207,7 +253,7 @@ interface TaskDetailModalProps {
   className?: string;
   show?: boolean;
   onHide?: Function;
-  task: Task | undefined;
+  task?: Task;
 }
 
 export default TaskDetailModal;

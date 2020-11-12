@@ -3,9 +3,9 @@ import { Button, Accordion, Card } from 'react-bootstrap';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { loadRequirementList } from '../../../redux/actions/loadRequirementList';
 import { Requirement } from '../../../interfaces';
-import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/CreateNewTaskModal';
 import { Task } from '../../../interfaces';
 import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
+import CreateNewTaskModal from "../../../components/requirement/createNewTaskModal/createNewTaskModal";
 import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
 import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
 import { getTasksWithReqId } from '../../../redux/actions/getTasksWithReqId';
@@ -124,7 +124,7 @@ const SplitRequirementContainer = ({
                 index={index}
               >
                 {/*TODO real task card object */}
-                <div onClick={() => handleTaskClicked(task)}>{task.title}</div>
+                <div className="task-detail-modal-trigger" onClick={() => handleTaskClicked(task)}>#{task.id} {task.title}</div>
               </TaskBlock>
             );
           }
