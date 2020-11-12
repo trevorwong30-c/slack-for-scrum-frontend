@@ -20,10 +20,13 @@ export const loadRequirementList = (): ThunkAction<
   RequirementAction
 > => {
   return async (dispatch) => {
-    const response = await getRequirementList();
-    if (response) {
-      const requirements = parseRequirementResponse(response);
+    const res = await getRequirementList();
+    if (res && res.success) {
+      console.log(res);
+      const requirements = parseRequirementResponse(res.payload);
       dispatch(loadRequirementListSuccess(requirements));
+    } else {
+      dispatch(loadRequirementListFailure(res.message));
     }
   };
 };

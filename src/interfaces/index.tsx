@@ -22,6 +22,7 @@ export interface Task {
   commentsHistory?: Array<Comment>;
   createdAt?: Date;
   endAt?: Date;
+  sprintId?: number;
 }
 
 export interface Comment {
