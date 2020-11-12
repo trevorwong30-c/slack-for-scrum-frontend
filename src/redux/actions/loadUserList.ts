@@ -1,6 +1,7 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import userListResponse from '../../mockReponses/user/loadUserList.json';
+import { getAllUsers } from '../../services/userServices';
+import { parseUsersResponse } from "../../parsers/usersParser";
 
 export const LOAD_USER_LIST_START = 'LOAD_USER_LIST_START';
 export const LOAD_USER_LIST_SUCCESS = 'LOAD_USER_LIST_SUCCESS';
@@ -12,27 +13,19 @@ export const loadUserList = (): ThunkAction<
     unknown,
     Action
     > => {
-    return (dispatch) => {
-
-        dispatch(loadUserListStart());
-
-        // TODO:: Should integrate with axios
-        // const payload = require('../mockResponses/searchUserByKeyword.json');
-        const payload = userListResponse;
-
-        dispatch(loadUserListSuccess(payload.list))
-
-        // return axios.get(LOAD_REQUIREMENT_LIST_ENDPOINT).then((response) => {
-        //   console.log(`response`, response);
-        //   dispatch(loadRequirementListSuccess(response.list));
-        // });
+    return async (dispatch) => {
+        try {
+            const res = await getAllUsers();
+            if (res && res.success) {
+              const users = parseUsersResponse(res.payload);
+              dispatch(loadUserListSuccess(users));
+            } else {
+              dispatch(loadUserListFail(res.message));
+            }
+          } catch (err) {
+            dispatch(loadUserListFail(err));
+          }
     };
-};
-
-export const loadUserListStart = () => {
-    return {
-        type: LOAD_USER_LIST_START
-    }
 };
 
 export const loadUserListSuccess = (list: any) => {

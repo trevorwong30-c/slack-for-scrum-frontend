@@ -1,6 +1,5 @@
 import React from 'react';
 import { Droppable } from "react-beautiful-dnd";
-import TaskBlock from "../taskBlock/TaskBlock";
 
 import "./TaskColumn.css"
 

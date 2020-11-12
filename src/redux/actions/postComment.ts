@@ -1,9 +1,5 @@
 import { Action, ThunkAction } from '@reduxjs/toolkit';
 import { RootStateOrAny } from 'react-redux';
-import mockRequirementList from '../../mockReponses/requirement/requirementList.json';
-// import {POST_COMMENT_ENDPOINT} from "../../services/taskServices";
-import axios from 'axios';
-import { PostCommentRequestBody } from '../../interfaces/requestBody';
 export const POST_COMMENT_SUCCESS = 'POST_COMMENT_SUCCESS';
 export const POST_COMMENT_FAIL = 'POST_COMMENT_FAIL';
 

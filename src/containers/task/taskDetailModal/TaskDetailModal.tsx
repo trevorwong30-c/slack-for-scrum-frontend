@@ -103,7 +103,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
               <Form.Label>Estimated No. of Hours</Form.Label>
               <Form.Control
                   type="number"
-                  value={formData?.estimatedHour}
+                  value={formData ? formData.estimatedHour : 0}
                   onChange={onEstimatedHoursChanged}
               >
               </Form.Control>
@@ -150,7 +150,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Control
           className="description-textarea"
           as="textarea"
-          defaultValue={formData?.description}
+          value={formData?.description}
           rows={4}
           onChange={onDescriptionChanged}
         ></Form.Control>
@@ -198,14 +198,13 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <div className="comment-input-wrapper">
           <Form.Control
               as="textarea"
-              defaultValue={''}
               value={inputComment}
               rows={4}
               placeholder={'Type your comment here...'}
               onChange={onCommentChanged}
           >
           </Form.Control>
-          <Button className={`button-submit-comment ${inputComment.trim() == "" ? "empty" : ""}`} variant="secondary" size="sm" onClick={submitComment}>Send!</Button>
+          <Button className={`button-submit-comment ${inputComment.trim() === "" ? "empty" : ""}`} variant="secondary" size="sm" onClick={submitComment}>Send!</Button>
         </div>
       </Form.Group>
     );
