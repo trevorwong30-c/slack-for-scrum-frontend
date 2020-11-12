@@ -5,10 +5,11 @@ import { loadRequirementList } from '../../../redux/actions/loadRequirementList'
 import { Requirement } from '../../../interfaces';
 import { Task } from '../../../interfaces';
 import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
-import CreateNewTaskModal from "../../../components/requirement/createNewTaskModal/createNewTaskModal";
+import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/createNewTaskModal';
 import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
 import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
 import { getTasksWithReqId } from '../../../redux/actions/getTasksWithReqId';
+import { createNewTaskThunk } from '../../../redux/actions/createNewTask';
 import './styles.css';
 
 interface SplitRequirementContainerProps {
@@ -124,7 +125,12 @@ const SplitRequirementContainer = ({
                 index={index}
               >
                 {/*TODO real task card object */}
-                <div className="task-detail-modal-trigger" onClick={() => handleTaskClicked(task)}>#{task.id} {task.title}</div>
+                <div
+                  className="task-detail-modal-trigger"
+                  onClick={() => handleTaskClicked(task)}
+                >
+                  #{task.id} {task.title}
+                </div>
               </TaskBlock>
             );
           }
@@ -156,6 +162,9 @@ const SplitRequirementContainer = ({
   const handleRequirementCreated = (requirementId: number, newTask: Task) => {
     //TODO
     //call api to create new Task
+    console.log('handleRequirementCreated');
+    console.log('newTask ', newTask);
+    // dispatch(createNewTaskThunk(newTask));
   };
 
   const handleTaskUpdated = (task: Task) => {
