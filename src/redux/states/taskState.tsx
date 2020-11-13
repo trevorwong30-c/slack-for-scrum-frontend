@@ -1,7 +1,11 @@
-const createTaskState = () => {
+import { TaskState } from "interfaces";
+
+const createTaskState = (): TaskState => {
   return {
-    tasks: [],
-    error: ''
+    taskList: [],
+    taskMap: {},
+    isLoadingTaskList: false,
+    error: ""
   };
 };
 

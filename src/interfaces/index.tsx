@@ -41,10 +41,23 @@ interface State {
   error: string;
 }
 
+export interface RootState {
+  requirement: any
+  sprint: any
+  task: TaskState
+  user: UserState
+}
+
 export interface UserState extends State {
   userList: Array<User>;
   userMap: Record<number, User>; // A map to index the users by their ids
   searchResults: Array<User>;
   isSearching: boolean;
   isLoadingUserList: boolean;
+}
+
+export interface TaskState extends State {
+  taskList: Array<Task>;
+  taskMap: Record<number, Task>; // A map to index the users by their ids
+  isLoadingTaskList: boolean;
 }
