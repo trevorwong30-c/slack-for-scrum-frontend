@@ -9,8 +9,12 @@ import CreateNewTaskModal from '../../../components/requirement/createNewTaskMod
 import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
 import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
 import { getTasksWithReqId } from '../../../redux/actions/getTasksWithReqId';
-import { createNewTaskThunk } from '../../../redux/actions/createNewTask';
+import {
+  createNewTaskThunk,
+  resetCreateNewTaskStatus
+} from '../../../redux/actions/createNewTask';
 import './styles.css';
+import { ApiStatus } from 'enums';
 
 interface SplitRequirementContainerProps {
   onTaskMoved?: (task: Task) => void;
@@ -35,6 +39,9 @@ const SplitRequirementContainer = ({
   const tasksToDisplay: Task[] = useSelector(
     (state: RootStateOrAny) => state.tasksWithReqId.tasks
   );
+  const createTaskApiStatus = useSelector(
+    (state: RootStateOrAny) => state.createNewTask.apiStatus
+  );
 
   useEffect(() => {
     dispatch(loadRequirementList());
@@ -53,6 +60,15 @@ const SplitRequirementContainer = ({
       setShowTaskDetailsModal(false);
     }
   }, [selectedTask]);
+
+  useEffect(() => {
+    if (createTaskApiStatus == ApiStatus.Success) {
+      if (addTaskRequirement?.id) {
+        dispatch(getTasksWithReqId(addTaskRequirement.id));
+        dispatch(resetCreateNewTaskStatus());
+      }
+    }
+  }, [createTaskApiStatus]);
 
   const handleAddTaskButtonPressed = (requirement: Requirement) => {
     setShowAddTaskModal(true);

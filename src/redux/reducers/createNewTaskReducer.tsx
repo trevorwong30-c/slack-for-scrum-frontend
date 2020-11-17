@@ -11,7 +11,7 @@ const initialState = {
   apiStatus: ApiStatus.NotStarted
 };
 
-export const createNewTaskReducer = (state = initialState, action: any) => {
+const createNewTaskReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case CREATE_NEW_TASK_SUCCESS: {
       return { ...state, apiStatus: ApiStatus.Success };
@@ -27,3 +27,5 @@ export const createNewTaskReducer = (state = initialState, action: any) => {
     }
   }
 };
+
+export default createNewTaskReducer;
