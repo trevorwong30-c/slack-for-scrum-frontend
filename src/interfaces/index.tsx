@@ -35,6 +35,7 @@ export interface User {
   id: number;
   username: string;
   role: number;
+  isProjectUser: boolean;
 }
 
 interface State {
