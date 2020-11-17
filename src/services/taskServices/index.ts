@@ -83,6 +83,7 @@ export const getTasksWithSprintId = async (sprintId: number) => {
   }
 };
 
+//TODO change back to task value
 export const createNewTask = async (reqId: number, task: Task) => {
   try {
     mockPostSuccess(instance, mockEnabled);
@@ -93,8 +94,9 @@ export const createNewTask = async (reqId: number, task: Task) => {
         description: task.description,
         estimatedHour: task.estimatedHour,
         remainingHour: task.estimatedHour,
-        assignee: task.assigneeId,
-        endAt: '2020-12-25',
+        // assignee: task.assigneeId,
+        assignee: 2,
+        endAt: '2020-12-31',
         // sprintId: task.sprintId
         sprintId: 1
       }
