@@ -5,9 +5,9 @@ export const parseUsersResponse = (response: any): User[] => {
 
   response.forEach((item: any) => {
     let user: User = {
-        id: 0,
-        username: "",
-        role: 2
+      id: 0,
+      username: '',
+      role: 2
     };
     tempArr.push(user);
   });

@@ -83,24 +83,28 @@ export const getTasksWithSprintId = async (sprintId: number) => {
   }
 };
 
-export const createNewTask = async (task: Task) => {
+export const createNewTask = async (reqId: number, task: Task) => {
   try {
     mockPostSuccess(instance, mockEnabled);
     const data = {
       newTaskInfo: {
-        requirementId: task.reqId,
+        requirementId: reqId,
         title: task.title,
         description: task.description,
         estimatedHour: task.estimatedHour,
-        remainingHour: task.remainingHour,
+        remainingHour: task.estimatedHour,
         assignee: task.assigneeId,
-        endAt: task.endAt?.toDateString(),
-        sprintId: task.sprintId
+        endAt: '2020-12-25',
+        // sprintId: task.sprintId
+        sprintId: 1
       }
     };
 
+    console.log('createNewTask data ', data);
+
     const res = await instance.post(API_END_POINTS.POST_NEW_TASKS, data);
     if (res) {
+      console.log('createNewTask res ', res);
       return { success: true };
     } else {
       return { success: false, message: 'cannot post new task' };

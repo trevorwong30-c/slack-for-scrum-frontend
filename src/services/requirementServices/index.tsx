@@ -22,6 +22,7 @@ export const getRequirementList = async () => {
 
     const res = await instance.get(API_END_POINTS.GET_ALL_REQUIREMENTS);
     if (res) {
+      console.log('getRequirementList', res.data);
       return { success: true, payload: res.data };
     }
 
