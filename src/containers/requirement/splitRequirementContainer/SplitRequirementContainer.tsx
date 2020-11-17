@@ -73,7 +73,7 @@ const SplitRequirementContainer = ({
 
   const hasTasksOfThisRequirement = (requirementId: number) => {
     return (
-      tasksToDisplay.findIndex((task: Task) => task.reqId == requirementId) !=
+      tasksToDisplay.findIndex((task: Task) => task.reqId === requirementId) !==
       -1
     );
   };

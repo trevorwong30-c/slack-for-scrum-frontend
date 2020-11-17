@@ -1,8 +1,8 @@
 export enum TaskStatus {
-  NotSpecified,
-  ToDo,
-  InProgress,
-  Done
+  NotSpecified = 1,
+  ToDo = 2,
+  InProgress = 3,
+  Done = 4
 }
 
 export enum ApiStatus {

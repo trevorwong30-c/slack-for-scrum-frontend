@@ -5,6 +5,7 @@ import MOCK_GET_TASK_REQ_1 from '../mockReponses/task/getTasksWithReqIdMock_1.js
 import MOCK_GET_TASK_REQ_2 from '../mockReponses/task/getTasksWithReqIdMock_2.json';
 import MOCK_GET_TASK_REQ_3 from '../mockReponses/task/getTasksWithReqIdMock_3.json';
 import MOCK_GET_ALL_TASKS from '../mockReponses/task/getAllTasksMock.json';
+import MOCK_GET_ALL_USERS from "../mockReponses/user/getAllUsersMock.json";
 import { API_END_POINTS } from '../constants';
 
 export const mockGetAllRequirements = (
@@ -28,6 +29,18 @@ export const mockGetAllTasks = (
     mock
       .onGet(API_END_POINTS.GET_ALL_TASKS)
       .reply(200, JSON.stringify(MOCK_GET_ALL_TASKS));
+  }
+};
+
+export const mockGetAllUsers = (
+  instance: AxiosInstance,
+  mockEnabled: boolean
+) => {
+  if (mockEnabled) {
+    const mock = new MockAdapter(instance);
+    mock
+      .onGet(API_END_POINTS.GET_ALL_USERS)
+      .reply(200, JSON.stringify(MOCK_GET_ALL_USERS));
   }
 };
 
