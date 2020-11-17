@@ -72,10 +72,11 @@ const SplitRequirementContainer = ({
   };
 
   const hasTasksOfThisRequirement = (requirementId: number) => {
-    return (
-      tasksToDisplay.findIndex((task: Task) => task.reqId === requirementId) !==
-      -1
+    const index = tasksToDisplay.findIndex(
+      (task: Task) => task.reqId === requirementId
     );
+    console.log('hasTasksOfThisRequirement index: ', index);
+    return index !== -1;
   };
 
   const getRequirementAccordion = (requirement: Requirement, index: number) => {
@@ -164,7 +165,7 @@ const SplitRequirementContainer = ({
     //call api to create new Task
     console.log('handleRequirementCreated');
     console.log('newTask ', newTask);
-    // dispatch(createNewTaskThunk(newTask));
+    dispatch(createNewTaskThunk(requirementId, newTask));
   };
 
   const handleTaskUpdated = (task: Task) => {

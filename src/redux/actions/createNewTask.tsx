@@ -13,12 +13,13 @@ export interface CreateNewTaskAction {
 }
 
 export const createNewTaskThunk = (
+  reqId: number,
   task: Task
 ): ThunkAction<void, RootStateOrAny, unknown, CreateNewTaskAction> => {
   return async (dispatch) => {
-    const res = await createNewTask(task);
+    const res = await createNewTask(reqId, task);
     if (res && res.success) {
-      console.log(res);
+      console.log('createNewTaskThunk', res);
       dispatch(createNewTaskSuccess());
     } else {
       dispatch(createNewTaskFailed(res.message));
