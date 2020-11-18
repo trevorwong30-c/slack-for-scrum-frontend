@@ -18,12 +18,17 @@ export const createNewTaskThunk = (
   task: Task
 ): ThunkAction<void, RootStateOrAny, unknown, CreateNewTaskAction> => {
   return async (dispatch) => {
-    const res = await postNewTask(reqId, task);
-    if (res && res.success) {
-      console.log('createNewTaskThunk', res);
-      dispatch(createNewTaskSuccess());
-    } else {
-      dispatch(createNewTaskFailed(res.message));
+    try {
+      const res = await postNewTask(reqId, task);
+      if (res && res.success) {
+        console.log('createNewTaskThunk', res);
+        dispatch(createNewTaskSuccess());
+      } else {
+        dispatch(createNewTaskFailed(res.message));
+      }
+    } catch (err) {
+      console.log('createNewTask failed with error: ', err);
+      dispatch(createNewTaskFailed(err.message));
     }
   };
 };
