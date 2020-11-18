@@ -26,6 +26,29 @@ export const getAllSprints = async () => {
   }
 };
 
+export const createNewSprint = async (startDate: string, endDate: string) => {
+  try {
+    const data = {
+      newSprintInfo: {
+        created_at: startDate,
+        endAt: endDate
+      }
+    };
+
+    console.log('new sprint data: ', data);
+    const res = await instance.post(API_END_POINTS.POST_NEW_SPRINT, data);
+    if (res) {
+      console.log('createNewSprint', res);
+      return { success: true };
+    }
+
+    return { success: false, message: 'Cannot get response' };
+  } catch (err) {
+    console.log('createNewSprint failed with error: ', err);
+    return { success: false, message: err.message };
+  }
+};
+
 export const addTaskIdToSprint = async (sprintId: number, taskId: number) => {
   try {
     const data = {

@@ -95,11 +95,8 @@ export const createNewTask = async (reqId: number, task: Task) => {
         description: task.description,
         estimatedHour: task.estimatedHour,
         remainingHour: task.estimatedHour,
-        // assignee: task.assigneeId,
-        assignee: 2,
-        endAt: '2020-12-31',
-        // sprintId: task.sprintId
-        sprintId: 1
+        assignee: task.assigneeId,
+        endAt: '2020-12-31'
       }
     };
 

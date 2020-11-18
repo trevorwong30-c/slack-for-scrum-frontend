@@ -10,6 +10,7 @@ import getAllSprintsReducer from './redux/reducers/getAllSprintsReducer';
 import updateSelectedSprintReducer from './redux/reducers/updateSelectedSprintReducer';
 import getTasksWithSprintIdReducer from './redux/reducers/getTasksWithSprintIdReducer';
 import addTaskIdToSprintReducer from './redux/reducers/addTaskIdToSprintReducer';
+import createNewSprintReducer from './redux/reducers/createNewSprintReducer';
 
 const rootReducer = combineReducers({
   sprint: sprintReducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   getAllSprints: getAllSprintsReducer,
   updateSelectedSprint: updateSelectedSprintReducer,
   getTasksWithSprintId: getTasksWithSprintIdReducer,
-  addTaskIdToSprint: addTaskIdToSprintReducer
+  addTaskIdToSprint: addTaskIdToSprintReducer,
+  createNewSprint: createNewSprintReducer
 });
 
 export default rootReducer;
