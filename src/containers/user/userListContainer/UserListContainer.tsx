@@ -10,6 +10,12 @@ import "./style.scss";
 import { loadUserList } from 'redux/actions/loadUserList';
 import { updateAllUsers } from "../../../redux/actions/updateUser";
 
+const roleMap:Record<number, string> = {
+    1: "Tester",
+    2: "Manager",
+    3: "Developer"
+};
+
 const UserListContainer = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -65,7 +71,7 @@ const UserListContainer = () => {
 
                     keyword.trim() == "" || new RegExp(keyword.trim()).test(user.username) ? (
                         <Row key={`tmpUserList${index}`}>
-                            <Col>{ user.username } ({ user.role })</Col>
+                            <Col>{ user.username } ({ roleMap[user.role] ? roleMap[user.role] : "" })</Col>
                             <Col className={"col-checkbox"}><Form.Check
                                 type="checkbox"
                                 className="my-1 mr-sm-2"
