@@ -26,6 +26,14 @@ export interface Task {
   lastUpdateAt?: Date;
 }
 
+export interface Sprint {
+  id?: number;
+  estimatedHour?: number;
+  createdAt?: string;
+  endAt?: string;
+  lastUpdateAt?: string;
+}
+
 export interface Comment {
   userId: number;
   content: string;

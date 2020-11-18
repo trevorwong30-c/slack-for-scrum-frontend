@@ -14,7 +14,7 @@ import {
   resetCreateNewTaskStatus
 } from '../../../redux/actions/createNewTask';
 import './styles.css';
-import { ApiStatus } from 'enums';
+import { ApiStatus, TaskStatus } from 'enums';
 
 interface SplitRequirementContainerProps {
   onTaskMoved?: (task: Task) => void;
@@ -89,7 +89,8 @@ const SplitRequirementContainer = ({
 
   const hasTasksOfThisRequirement = (requirementId: number) => {
     const index = tasksToDisplay.findIndex(
-      (task: Task) => task.reqId === requirementId
+      (task: Task) =>
+        task.reqId === requirementId && task.status == TaskStatus.NotSpecified
     );
     console.log('hasTasksOfThisRequirement index: ', index);
     return index !== -1;
@@ -134,7 +135,10 @@ const SplitRequirementContainer = ({
         columnType={'requirementColumn'}
       >
         {tasksToDisplay.map((task: Task, index: number) => {
-          if (task.reqId == requirement.id) {
+          if (
+            task.reqId == requirement.id &&
+            task.status == TaskStatus.NotSpecified
+          ) {
             return (
               <TaskBlock
                 key={`${requirement.id}-Task-${index}`}
