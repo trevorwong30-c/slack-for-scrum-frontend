@@ -25,3 +25,26 @@ export const getAllSprints = async () => {
     return { success: false, message: err.message };
   }
 };
+
+export const addTaskIdToSprint = async (sprintId: number, taskId: number) => {
+  try {
+    const data = {
+      updateSprintInfo: {
+        taskId: taskId
+      }
+    };
+
+    let url = API_END_POINTS.PUT_SPRINT.replace(':sprintId', sprintId + '');
+    const res = await instance.put(url, data);
+
+    if (res) {
+      console.log('addTaskIdToSprint', res.data);
+      return { success: true, payload: res.data };
+    }
+
+    return { success: false, message: 'Cannot get response' };
+  } catch (err) {
+    console.log('addTaskIdToSprint failed with error: ', err);
+    return { success: false, message: err.message };
+  }
+};

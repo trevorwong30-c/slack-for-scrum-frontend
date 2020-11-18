@@ -3,6 +3,7 @@ import { Button, Col, Form } from 'react-bootstrap';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../../interfaces';
 import { updateSelectedSprint } from '../../../redux/actions/updateSelectedSprintAction';
+import CreateNewSprintModal from '../../../components/sprint/createNewSprintModal/createNewSprintModal';
 
 const SprintSelector = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,12 @@ const SprintSelector = () => {
   const openNewSprintModal = () => {
     setShowNewSprintModal(true);
   };
+
+  const closeNewSprintModal = () => {
+    setShowNewSprintModal(false);
+  };
+
+  const handleNewSprintCreated = () => {};
 
   useEffect(() => {
     console.log('selectedSprintId changed to ', selectedSprintId);
@@ -51,6 +58,12 @@ const SprintSelector = () => {
           </Col>
         </Form.Row>
       </Form.Group>
+
+      <CreateNewSprintModal
+        isVisible={showNewSprintModal}
+        onClose={closeNewSprintModal}
+        onNewSprintCreated={handleNewSprintCreated}
+      />
     </>
   );
 };
