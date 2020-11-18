@@ -118,32 +118,28 @@ export const createNewTask = async (reqId: number, task: Task) => {
   }
 };
 
-export const updateTask = async (task:Task) => {
-
+export const updateTask = async (task: Task) => {
   if (!task || !task.id) {
     return { success: false, message: 'cannot get tasks with sprint id' };
   }
 
   //TODO use axios to call API
   try {
-    const url = API_END_POINTS.PUT_TASK.replace(
-      ':taskId',
-      task.id.toString()
-    );
+    const url = API_END_POINTS.PUT_TASK.replace(':taskId', task.id.toString());
 
     console.log('updateTask url ', url);
     const res = await instance.put(url, {
-      "updateTaskInfo": {
-        "Req_id": task.reqId,
-        "Title": task.title,
-        "description": task.description,
-        "estimatedHour": task.estimatedHour,
-        "remainingHour": task.remainingHour,
-        "historical_spent": task.historicalSpent,
-        "status": task.status,
-        "assignee": task.assigneeId,
-        "comments_history": task.commentsHistory,
-        "endAt": moment(task.endAt).format("YYYY-MM-DD")
+      updateTaskInfo: {
+        Req_id: task.reqId,
+        Title: task.title,
+        description: task.description,
+        estimatedHour: task.estimatedHour,
+        remainingHour: task.remainingHour,
+        historical_spent: task.historicalSpent,
+        status: task.status,
+        assignee: task.assigneeId,
+        comments_history: task.commentsHistory,
+        endAt: moment(task.endAt).format('YYYY-MM-DD')
       }
     });
     if (res) {

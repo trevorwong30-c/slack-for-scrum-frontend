@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Form } from 'react-bootstrap';
+import { Button, Col, Form } from 'react-bootstrap';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../../interfaces';
 import { updateSelectedSprint } from '../../../redux/actions/updateSelectedSprintAction';
@@ -9,15 +9,18 @@ const SprintSelector = () => {
   const sprints = useSelector(
     (state: RootStateOrAny) => state.getAllSprints.sprints
   );
-  //   const [selectedSprint, setSelectedSprint] = useState(1);
   const selectedSprintId = useSelector(
     (state: RootStateOrAny) => state.updateSelectedSprint.selectedSprintId
   );
+  const [showNewSprintModal, setShowNewSprintModal] = useState(false);
 
   const onSelectedSprintChanged = (e: any) => {
     console.log('onSelectedSprintChanged ', e.target.value);
     dispatch(updateSelectedSprint(e.target.value));
-    // setSelectedSprint(e.target.value);
+  };
+
+  const openNewSprintModal = () => {
+    setShowNewSprintModal(true);
   };
 
   useEffect(() => {
@@ -25,19 +28,30 @@ const SprintSelector = () => {
   }, [selectedSprintId]);
 
   return (
-    <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>Current Sprint</Form.Label>
-      <Form.Control
-        as="select"
-        defaultValue={1}
-        value={selectedSprintId}
-        onChange={onSelectedSprintChanged}
-      >
-        {sprints?.map((sprint: Sprint) => {
-          return <option value={sprint.id}>Sprint {sprint.id}</option>;
-        })}
-      </Form.Control>
-    </Form.Group>
+    <>
+      <Form.Group as={Col} controlId="formGridState">
+        <Form.Label>Current Sprint</Form.Label>
+        <Form.Row>
+          <Col>
+            <Form.Control
+              as="select"
+              defaultValue={1}
+              value={selectedSprintId}
+              onChange={onSelectedSprintChanged}
+            >
+              {sprints?.map((sprint: Sprint) => {
+                return <option value={sprint.id}>Sprint {sprint.id}</option>;
+              })}
+            </Form.Control>
+          </Col>
+          <Col>
+            <Button variant="secondary" onClick={openNewSprintModal}>
+              New Sprint
+            </Button>
+          </Col>
+        </Form.Row>
+      </Form.Group>
+    </>
   );
 };
 
