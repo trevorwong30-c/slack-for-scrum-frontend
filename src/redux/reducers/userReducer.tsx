@@ -5,10 +5,12 @@ import {
 } from "../actions/searchUserByKeyword";
 import {User, UserState} from "../../interfaces";
 import {LOAD_USER_LIST_FAIL, LOAD_USER_LIST_START, LOAD_USER_LIST_SUCCESS} from "../actions/loadUserList";
+import { UPDATE_USER_SUCCESS } from "redux/actions/updateUser";
 
 const initialState = {
   list: [],
-  error: ''
+  error: '',
+  confirmUserTimestamp: 0
 };
 
 const userReducer = (state:UserState | any = initialState, action: any) => {
@@ -55,6 +57,11 @@ const userReducer = (state:UserState | any = initialState, action: any) => {
         ...state,
         error: action.error,
         isLoadingUserList: false
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        confirmUserTimestamp: new Date().getTime()
       };
     default:
       return state;

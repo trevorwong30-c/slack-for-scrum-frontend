@@ -7,7 +7,8 @@ const createUserState = (): UserState => {
     searchResults: [],
     isSearching: false,
     isLoadingUserList: false,
-    error: ''
+    error: '',
+    confirmUserTimestamp: 0
   };
 };
 
