@@ -3,6 +3,8 @@ import { Task } from '../interfaces';
 export const parseTasksReponse = (response: any): Task[] => {
   const tempArr: Task[] = [];
 
+  console.log('before parseTasksReponse', response);
+
   response.forEach((item: any) => {
     let task: Task = {
       id: item?.iTask_id,
@@ -16,7 +18,8 @@ export const parseTasksReponse = (response: any): Task[] => {
       assigneeId:item?.iAssignee,
       commentsHistory: item.jComments_history ? JSON.parse(item.jComments_history) : [],
       createdAt: item?.dCreateAt,
-      endAt: item?.dEndAt
+      endAt: item?.dEndAt,
+      lastUpdateAt: item?.dLastUpdateAt
     };
     tempArr.push(task);
   });

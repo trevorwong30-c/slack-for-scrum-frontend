@@ -1,7 +1,6 @@
 import response from '../../mockReponses/requirement/requirementList.json';
-import { API_URL, MOCK_ENABLED } from '../../env.json';
+import { API_URL } from '../../env.json';
 import axios from 'axios';
-import { mockGetAllRequirements } from '../mockHelper';
 import { API_END_POINTS } from '../../constants';
 
 export const LOAD_REQUIREMENT_LIST_ENDPOINT = '/requirement/list';
@@ -12,23 +11,17 @@ const instance = axios.create({
   timeout: 20000
 });
 
-// enable or disable mock data
-const mockEnabled = MOCK_ENABLED;
-
-export const getRequirementList = async () => {
-  //TODO use axios to call API
+export const getAllSprints = async () => {
   try {
-    mockGetAllRequirements(instance, mockEnabled);
-
-    const res = await instance.get(API_END_POINTS.GET_ALL_REQUIREMENTS);
+    const res = await instance.get(API_END_POINTS.GET_ALL_SPRINTS);
     if (res) {
-      console.log('getRequirementList', res.data);
+      console.log('getAllSprints', res.data);
       return { success: true, payload: res.data };
     }
 
     return { success: false, message: 'Cannot get response' };
   } catch (err) {
-    console.log(err);
+    console.log('get All sprint failed with error: ', err);
     return { success: false, message: err.message };
   }
 };

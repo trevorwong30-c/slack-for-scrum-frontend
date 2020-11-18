@@ -5,11 +5,16 @@ import { loadRequirementList } from '../../../redux/actions/loadRequirementList'
 import { Requirement } from '../../../interfaces';
 import { Task } from '../../../interfaces';
 import TaskDetailModal from 'containers/task/taskDetailModal/TaskDetailModal';
-import CreateNewTaskModal from "../../../components/requirement/createNewTaskModal/createNewTaskModal";
+import CreateNewTaskModal from '../../../components/requirement/createNewTaskModal/createNewTaskModal';
 import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
 import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
 import { getTasksWithReqId } from '../../../redux/actions/getTasksWithReqId';
+import {
+  createNewTaskThunk,
+  resetCreateNewTaskStatus
+} from '../../../redux/actions/createNewTask';
 import './styles.css';
+import { ApiStatus, TaskStatus } from 'enums';
 
 interface SplitRequirementContainerProps {
   onTaskMoved?: (task: Task) => void;
@@ -34,6 +39,9 @@ const SplitRequirementContainer = ({
   const tasksToDisplay: Task[] = useSelector(
     (state: RootStateOrAny) => state.tasksWithReqId.tasks
   );
+  const createTaskApiStatus = useSelector(
+    (state: RootStateOrAny) => state.createNewTask.apiStatus
+  );
 
   useEffect(() => {
     dispatch(loadRequirementList());
@@ -53,6 +61,15 @@ const SplitRequirementContainer = ({
     }
   }, [selectedTask]);
 
+  useEffect(() => {
+    if (createTaskApiStatus == ApiStatus.Success) {
+      if (addTaskRequirement?.id) {
+        dispatch(getTasksWithReqId(addTaskRequirement.id));
+        dispatch(resetCreateNewTaskStatus());
+      }
+    }
+  }, [createTaskApiStatus]);
+
   const handleAddTaskButtonPressed = (requirement: Requirement) => {
     setShowAddTaskModal(true);
     setAddTaskRequirement(requirement);
@@ -71,10 +88,12 @@ const SplitRequirementContainer = ({
   };
 
   const hasTasksOfThisRequirement = (requirementId: number) => {
-    return (
-      tasksToDisplay.findIndex((task: Task) => task.reqId === requirementId) !==
-      -1
+    const index = tasksToDisplay.findIndex(
+      (task: Task) =>
+        task.reqId === requirementId && task.status == TaskStatus.NotSpecified
     );
+    console.log('hasTasksOfThisRequirement index: ', index);
+    return index !== -1;
   };
 
   const getRequirementAccordion = (requirement: Requirement, index: number) => {
@@ -116,7 +135,10 @@ const SplitRequirementContainer = ({
         columnType={'requirementColumn'}
       >
         {tasksToDisplay.map((task: Task, index: number) => {
-          if (task.reqId == requirement.id) {
+          if (
+            task.reqId == requirement.id &&
+            task.status == TaskStatus.NotSpecified
+          ) {
             return (
               <TaskBlock
                 key={`${requirement.id}-Task-${index}`}
@@ -124,7 +146,12 @@ const SplitRequirementContainer = ({
                 index={index}
               >
                 {/*TODO real task card object */}
-                <div className="task-detail-modal-trigger" onClick={() => handleTaskClicked(task)}>#{task.id} {task.title}</div>
+                <div
+                  className="task-detail-modal-trigger"
+                  onClick={() => handleTaskClicked(task)}
+                >
+                  #{task.id} {task.title}
+                </div>
               </TaskBlock>
             );
           }
@@ -156,6 +183,9 @@ const SplitRequirementContainer = ({
   const handleRequirementCreated = (requirementId: number, newTask: Task) => {
     //TODO
     //call api to create new Task
+    console.log('handleRequirementCreated');
+    console.log('newTask ', newTask);
+    dispatch(createNewTaskThunk(requirementId, newTask));
   };
 
   const handleTaskUpdated = (task: Task) => {

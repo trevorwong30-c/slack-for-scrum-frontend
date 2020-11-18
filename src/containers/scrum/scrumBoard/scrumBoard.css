@@ -7,4 +7,10 @@
 .requirementColumnContainer{
 	margin-bottom: 3%;
 }
+.sprintSelector {
+  position: absolute;
+  width: 180;
+  top:65%;
+  right: 5%;
+}
 /*# sourceMappingURL=scrumBoard.css.map */

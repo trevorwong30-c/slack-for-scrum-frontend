@@ -23,6 +23,15 @@ export interface Task {
   createdAt?: Date;
   endAt?: Date;
   sprintId?: number;
+  lastUpdateAt?: Date;
+}
+
+export interface Sprint {
+  id?: number;
+  estimatedHour?: number;
+  createdAt?: string;
+  endAt?: string;
+  lastUpdateAt?: string;
 }
 
 export interface Comment {
@@ -43,10 +52,10 @@ interface State {
 }
 
 export interface RootState {
-  requirement: any
-  sprint: any
-  task: TaskState
-  user: UserState
+  requirement: any;
+  sprint: any;
+  task: TaskState;
+  user: UserState;
 }
 
 export interface UserState extends State {
