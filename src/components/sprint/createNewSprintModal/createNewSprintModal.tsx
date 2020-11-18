@@ -38,8 +38,17 @@ const CreateNewSprintModal = ({
     setEndDate(e.target.value);
   };
 
+  const resetStates = () => {
+    setStartDate('');
+    setEndDate('');
+  };
+
   return (
-    <Modal show={isVisible} className="CreateNewSprintModal">
+    <Modal
+      show={isVisible}
+      className="CreateNewSprintModal"
+      onExited={resetStates}
+    >
       <Modal.Header>
         <h3>Create New Sprint</h3>
         <IconButton
