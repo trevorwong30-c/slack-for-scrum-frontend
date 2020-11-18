@@ -30,7 +30,7 @@ export const createNewSprint = async (startDate: string, endDate: string) => {
   try {
     const data = {
       newSprintInfo: {
-        create_at: startDate,
+        created_at: startDate,
         endAt: endDate
       }
     };

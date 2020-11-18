@@ -4,7 +4,11 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../../interfaces';
 import { updateSelectedSprint } from '../../../redux/actions/updateSelectedSprintAction';
 import CreateNewSprintModal from '../../../components/sprint/createNewSprintModal/createNewSprintModal';
-import { createNewSprintThunk } from 'redux/actions/createNewSprintAction';
+import {
+  createNewSprintThunk,
+  resetCreateNewSprint
+} from 'redux/actions/createNewSprintAction';
+import { ApiStatus } from 'enums';
 
 const SprintSelector = () => {
   const dispatch = useDispatch();
@@ -13,6 +17,9 @@ const SprintSelector = () => {
   );
   const selectedSprintId = useSelector(
     (state: RootStateOrAny) => state.updateSelectedSprint.selectedSprintId
+  );
+  const createNewSprintApiStatus = useSelector(
+    (state: RootStateOrAny) => state.createNewSprint.apiStatus
   );
   const [showNewSprintModal, setShowNewSprintModal] = useState(false);
 
@@ -36,6 +43,16 @@ const SprintSelector = () => {
   useEffect(() => {
     console.log('selectedSprintId changed to ', selectedSprintId);
   }, [selectedSprintId]);
+
+  useEffect(() => {
+    if (
+      createNewSprintApiStatus == ApiStatus.Success ||
+      createNewSprintApiStatus == ApiStatus.Failed
+    ) {
+      closeNewSprintModal();
+      dispatch(resetCreateNewSprint());
+    }
+  }, [createNewSprintApiStatus, dispatch]);
 
   return (
     <>

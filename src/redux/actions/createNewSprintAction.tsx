@@ -5,6 +5,7 @@ import { getAllSprintsThunk } from '../actions/getAllSprintsAction';
 
 export const CREATE_NEW_SPRINT_SUCCESS = 'CREATE_NEW_SPRINT_SUCCESS';
 export const CREATE_NEW_SPRINT_FAILED = 'CREATE_NEW_SPRINT_FAILED';
+export const RESET_CREATE_NEW_SPRINT = 'RESET_CREATE_NEW_SPRINT';
 
 interface CreateNewSprintAction {
   type: string;
@@ -40,4 +41,8 @@ const createNewSprintSuccess = () => ({
 const createNewSprintFailed = (msg: string) => ({
   type: CREATE_NEW_SPRINT_FAILED,
   msg
+});
+
+export const resetCreateNewSprint = () => ({
+  type: RESET_CREATE_NEW_SPRINT
 });
