@@ -4,6 +4,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { Sprint } from '../../../interfaces';
 import { updateSelectedSprint } from '../../../redux/actions/updateSelectedSprintAction';
 import CreateNewSprintModal from '../../../components/sprint/createNewSprintModal/createNewSprintModal';
+import { createNewSprintThunk } from 'redux/actions/createNewSprintAction';
 
 const SprintSelector = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,9 @@ const SprintSelector = () => {
     setShowNewSprintModal(false);
   };
 
-  const handleNewSprintCreated = () => {};
+  const handleNewSprintCreated = (startDate: string, endDate: string) => {
+    dispatch(createNewSprintThunk(startDate, endDate));
+  };
 
   useEffect(() => {
     console.log('selectedSprintId changed to ', selectedSprintId);
