@@ -8,6 +8,7 @@ import {
 } from '../mockHelper';
 import { API_END_POINTS } from '../../constants';
 import { Task } from 'interfaces';
+import moment from 'moment';
 
 export const LOAD_REQUIREMENT_LIST_ENDPOINT = '/requirement/list';
 
@@ -110,6 +111,45 @@ export const createNewTask = async (reqId: number, task: Task) => {
       return { success: true };
     } else {
       return { success: false, message: 'cannot post new task' };
+    }
+  } catch (err) {
+    console.log(err);
+    return { success: false, message: err.message };
+  }
+};
+
+export const updateTask = async (task:Task) => {
+
+  if (!task || !task.id) {
+    return { success: false, message: 'cannot get tasks with sprint id' };
+  }
+
+  //TODO use axios to call API
+  try {
+    const url = API_END_POINTS.PUT_TASK.replace(
+      ':taskId',
+      task.id.toString()
+    );
+
+    console.log('updateTask url ', url);
+    const res = await instance.put(url, {
+      "updateTaskInfo": {
+        "Req_id": task.reqId,
+        "Title": task.title,
+        "description": task.description,
+        "estimatedHour": task.estimatedHour,
+        "remainingHour": task.remainingHour,
+        "historical_spent": task.historicalSpent,
+        "status": task.status,
+        "assignee": task.assigneeId,
+        "comments_history": task.commentsHistory,
+        "endAt": moment(task.endAt).format("YYYY-MM-DD")
+      }
+    });
+    if (res) {
+      return { success: true, payload: res.data };
+    } else {
+      return { success: false, message: 'cannot get tasks with sprint id' };
     }
   } catch (err) {
     console.log(err);

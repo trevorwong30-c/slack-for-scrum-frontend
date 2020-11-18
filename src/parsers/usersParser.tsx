@@ -3,11 +3,12 @@ import { User } from '../interfaces';
 export const parseUsersResponse = (response: any): User[] => {
   const tempArr: User[] = [];
 
-  response.forEach((item: any) => {
+  response.forEach((rawUser: any) => {
     let user: User = {
-      id: 0,
-      username: '',
-      role: 2
+        id: rawUser.id,
+        username: rawUser.user_name,
+        role: rawUser.role,
+        isProjectUser: rawUser.isProjectUser
     };
     tempArr.push(user);
   });
