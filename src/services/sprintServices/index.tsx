@@ -31,8 +31,7 @@ export const createNewSprint = async (startDate: string, endDate: string) => {
     const data = {
       newSprintInfo: {
         create_at: startDate,
-        endAt: endDate,
-        taskIds: []
+        endAt: endDate
       }
     };
 

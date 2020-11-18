@@ -3,22 +3,24 @@ import { Task } from 'interfaces';
 import { RootStateOrAny } from 'react-redux';
 import { updateTask } from 'services/taskServices';
 import { loadAllTasks } from './loadAllTasks';
-export const UPDATE_TASK_DETAIL_START = "UPDATE_TASK_DETAIL_START";
+import { getTasksWithReqId } from './getTasksWithReqId';
+export const UPDATE_TASK_DETAIL_START = 'UPDATE_TASK_DETAIL_START';
 export const UPDATE_TASK_DETAIL_SUCCESS = 'UPDATE_TASK_DETAIL_SUCCESS';
 export const UPDATE_TASK_DETAIL_FAIL = 'UPDATE_TASK_DETAIL_FAIL';
 
-export const updateTaskDetail = (data:Task): ThunkAction<
-  void,
-  RootStateOrAny,
-  unknown,
-  Action
-> => {
+export const updateTaskDetail = (
+  data: Task
+): ThunkAction<void, RootStateOrAny, unknown, Action> => {
   return async (dispatch) => {
     try {
-      const res:any = await updateTask(data);
+      const res: any = await updateTask(data);
       if (res && res.success) {
         dispatch(loadAllTasks());
         dispatch(updateTaskDetailSuccess(data));
+        if (data.reqId) {
+          //Update tasks list under requirement
+          dispatch(getTasksWithReqId(data.reqId));
+        }
       } else {
         dispatch(updateTaskDetailFailure(res.message));
       }
