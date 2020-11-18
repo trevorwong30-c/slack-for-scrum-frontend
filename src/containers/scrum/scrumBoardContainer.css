@@ -1,10 +1,9 @@
-.scrumBoardPageContainer .scrumBoardTitle {
-  font-size: 20px;
-  padding: 15px;
+.scrumBoardPageContainer .scrumBoardContainer {
+  padding: 0 15px;
+  height: 100%;
 }
 
-.scrumBoardPageContainer .scrumBoardContainer {
-  padding: 15px;
-  height: 60vh;
+.scrumBoardPageContainer .task-detail-modal-trigger {
+  cursor: pointer;
 }
 /*# sourceMappingURL=scrumBoardContainer.css.map */

@@ -144,6 +144,7 @@ const SplitRequirementContainer = ({
                 key={`${requirement.id}-Task-${index}`}
                 columnName={requirement.id}
                 index={index}
+                task={task}
               >
                 {/*TODO real task card object */}
                 <div
@@ -195,6 +196,9 @@ const SplitRequirementContainer = ({
 
   return (
     <div className="splitRequirementContainer">
+      <div className="requirementTitle">
+        Requirements
+      </div>
       <Accordion style={{ width: '50%' }}>
         {requirements.map((requirement: Requirement, index: number) =>
           getRequirementAccordion(requirement, index)

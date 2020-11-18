@@ -1,17 +1,16 @@
 import React from 'react';
-import ScrumBoard from "./scrumBoard/ScrumBoard"
+import ScrumBoard from './scrumBoard/ScrumBoard';
 
-import "./scrumBoardContainer.css"
+import './scrumBoardContainer.css';
 
-function ScrumBoardContainer(props:any) {
-    return (
-        <div className="scrumBoardPageContainer">
-			<div className='scrumBoardTitle'>Scrum board</div>
-            <div className="scrumBoardContainer">
-                <ScrumBoard />
-            </div>
-		</div>
-    );
+function ScrumBoardContainer(props: any) {
+  return (
+    <div className="scrumBoardPageContainer">
+      <div className="scrumBoardContainer">
+        <ScrumBoard />
+      </div>
+    </div>
+  );
 }
 
 export default ScrumBoardContainer;

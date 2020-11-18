@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { DragDropContext } from 'react-beautiful-dnd';
 import TaskColumn from '../taskColumn/TaskColumn';
@@ -10,7 +11,7 @@ import TaskDetailModal from '../../task/taskDetailModal/TaskDetailModal';
 import { Task, RootState } from '../../../interfaces';
 import { TaskStatus } from '../../../enums';
 import { loadUserList } from '../../../redux/actions/loadUserList';
-import { useDispatch, useSelector } from 'react-redux';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import SplitRequirementContainer from 'containers/requirement/splitRequirementContainer/SplitRequirementContainer';
 import { loadAllTasks } from '../../../redux/actions/loadAllTasks';
 import SprintSelector from '../../../components/sprint/sprintSelector/sprintSelector';
@@ -23,6 +24,10 @@ function ScrumBoard(props: any) {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
 
   const taskState = useSelector((state: RootState) => state.task);
+
+  const selectedSprintId = useSelector(
+    (state: RootStateOrAny) => state.updateSelectedSprint.selectedSprintId
+  );
 
   const dispatch = useDispatch();
 
@@ -232,23 +237,84 @@ function ScrumBoard(props: any) {
     dispatch(getAllSprintsThunk());
   }, [dispatch]);
 
-  const onDragEnd = () => {
-    console.log('tester');
-  };
+  const onDragEnd = (result: any) => {
+    console.log('result: ', result);
+    const sourceColumn = result?.source?.droppableId;
+    const destinationColumn = result?.destination?.droppableId;
+    // console.log('result.source: ', sourceColumn);
+    // console.log('result.destination: ', destinationColumn);
+    if (sourceColumn === destinationColumn) console.log('Re-order action');
+    if (
+      destinationColumn !== 'todoColumn' &&
+      destinationColumn !== 'inProgressColumn' &&
+      destinationColumn !== 'doneColumn'
+    ) {
+      return console.log('Warning - Drop to requirement');
+    }
+    const draggable: string = result.draggableId;
+    const draggableId: number = +draggable.split('-')[2];
+    let updateTask: Task | undefined = taskState.taskList.find(
+      (task) => task.id === draggableId
+    );
 
+    console.log('selectedSprintId: ', selectedSprintId);
+    console.log('draggableId: ', draggableId);
+    console.log('updateTask: ', updateTask);
+    if (
+      sourceColumn !== 'todoColumn' &&
+      sourceColumn !== 'inProgressColumn' &&
+      sourceColumn !== 'doneColumn'
+    ) {
+      /*============================================*/
+      //Add task id to sprint
+      /*============================================*/
+      /*============================================*/
+      //Add task id to sprint
+      /*============================================*/
+      dispatch(loadAllTasks());
+    }
+    if (destinationColumn == 'todoColumn') {
+      updateTask = { ...updateTask, status: 1 };
+      /*============================================*/
+      // Edit status to
+      /*============================================*/
+    }
+    else if (destinationColumn == 'inProgressColumn') {
+      updateTask = { ...updateTask, status: 2 };
+      /*============================================*/
+      // Edit status to
+      /*============================================*/
+    }
+    else if (destinationColumn == 'doneColumn') {
+      updateTask = { ...updateTask, status: 3 };
+      /*============================================*/
+      // Edit status to
+      /*============================================*/
+    }
+    else{
+      return console.log('Warning: unknown target status');
+    }
+    console.log('new updateTask: ',updateTask);
+  };
   const getRequirementList = () => {};
 
   console.log('taskList', taskList);
 
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="requirementColumnContainer">
-          <SplitRequirementContainer />
+      <div className="titleContainer">
+        <div className="titleLabel">
+          Scrum Board
         </div>
         <div className="sprintSelector">
           <SprintSelector />
         </div>
+      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="requirementColumnContainer">
+          <SplitRequirementContainer />
+        </div>
+        
         <div className="scrumBoard">
           {taskColumnList.map((taskColumn, index) => (
             <TaskColumn
@@ -263,6 +329,7 @@ function ScrumBoard(props: any) {
                       key={`${taskColumn.columnId}-Task-${index}`}
                       columnName={taskColumn.columnId}
                       index={index}
+                      task={task}
                     >
                       <div
                         className="task-detail-modal-trigger"

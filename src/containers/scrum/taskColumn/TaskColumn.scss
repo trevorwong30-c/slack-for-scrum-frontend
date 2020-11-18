@@ -1,35 +1,106 @@
-.columnContainer {
-    height: 80%;
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  .titleLabel {
+    font-size: 24px;
+  }
+  .sprintSelector {
+    width: 300px;
+    .form-group {
+      margin: 0;
+    }
+  }
+}
+
+.requirementColumnContainer {
+  border: 1px solid lightgray;
+  height: 35vh;
+  overflow-y: auto;
+  .splitRequirementContainer {
+    .requirementTitle {
+      margin-left: 5px;
+      font-size: 24px;
+    }
+    .card {
+      margin: 5px;
+    }
+  }
+  .sprintLabel {
+    color: red;
+  }
+}
+.scrumBoard {
+  height: 60vh;
+  .columnContainer {
     flex: 33.33%;
     box-sizing: border-box;
     border-right: 1px lightgray solid;
     display: flex;
     flex-direction: column;
+    margin-right: 2.5px;
+    padding-right: 2.5px;
     &:last-child {
-        border-right: none;
+      border-right: none;
+      margin-right: 0px;
+      padding-right: 0px;
     }
     .columnTitle {
-        text-align: center;
+      text-align: center;
+      font-size: 26px;
+      color: white;
+      &.todoColumn {
+        background-color: #e78c00;
+      }
+      &.inProgressColumn {
+        background-color: #bbd500;
+      }
+      &.doneColumn {
+        background-color: #60c32f;
+      }
     }
     .columnContent {
-        flex-grow: 1;
-        padding: 5px;
-        background-color: white;
-        transition: background-color 0.5s ease;
-        &.isDragging {
-            background-color: lightgray;
-        }
+      flex-grow: 1;
+      padding: 5px;
+      background-color: white;
+      transition: background-color 0.5s ease;
+      overflow-y: auto;
+      &.isDragging.todoColumn {
+        background-color: #ffe9c7;
+      }
+      &.isDragging.inProgressColumn {
+        background-color: #f8ffc4;
+      }
+      &.isDragging.doneColumn {
+        background-color: #dff5d4;
+      }
     }
+  }
 }
-.requirementColumn{
-    margin-bottom: 5px;
-    .columnContent {
-        flex-grow: 1;
-        padding: 5px;
-        background-color: white;
-        transition: background-color 0.5s ease;
-        &.isDragging {
-            background-color: lightgray;
-        }
+
+.requirementColumn {
+  margin-bottom: 5px;
+  .columnContent {
+    flex-grow: 1;
+    padding: 5px;
+    background-color: white;
+    transition: background-color 0.5s ease;
+    &.isDragging {
+      background-color: lightgray;
     }
+  }
+}
+::-webkit-scrollbar {
+  width: 7.5px;
+}
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 0;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: #555f69;
 }

@@ -25,8 +25,7 @@ const SprintSelector = () => {
   }, [selectedSprintId]);
 
   return (
-    <Form.Group as={Col} controlId="formGridState">
-      <Form.Label>Current Sprint</Form.Label>
+    <Form.Group controlId="formGridState">
       <Form.Control
         as="select"
         defaultValue={1}
