@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { Comment, Task } from '../../../interfaces';
+import { Comment, Task, User } from '../../../interfaces';
 import { Col, Form, Card, Button } from 'react-bootstrap';
 import './style.scss';
 import { TaskStatus } from '../../../enums';
 import moment from 'moment';
 import { updateTaskDetail } from '../../../redux/actions/updateTaskDetail';
-import {postComment} from "../../../redux/actions/postComment";
+import { postComment } from '../../../redux/actions/postComment';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 const TaskDetailModal = (props: TaskDetailModalProps) => {
   const { className, show, onHide, task } = props;
 
-  const [ taskAssigneeId, setTaskAssigneeId ] = useState(0);
+  const [taskAssigneeId, setTaskAssigneeId] = useState(0);
 
-  const [ taskStatus, setTaskStatus ] = useState(TaskStatus.NotSpecified);
+  const [taskStatus, setTaskStatus] = useState(TaskStatus.NotSpecified);
 
-  const [ taskEstimatedHour, setTaskEstimatedHour ] = useState(0);
+  const [taskEstimatedHour, setTaskEstimatedHour] = useState(0);
 
-  const [ taskDescription, setTaskDescription ] = useState("");
+  const [taskDescription, setTaskDescription] = useState('');
 
-  const [ taskComments, setTaskComments] = useState<Array<Comment>>([]);
+  const [taskComments, setTaskComments] = useState<Array<Comment>>([]);
 
-  const [ taskHistoricalSpent, setTaskHistoricalSpent] = useState<Array<number>>([]);
+  const [taskHistoricalSpent, setTaskHistoricalSpent] = useState<Array<number>>(
+    []
+  );
 
-  const [ logTime, setLogTime ] = useState(0);
+  const [logTime, setLogTime] = useState(0);
 
-  const [ inputComment, setInputComment] = useState<string>("");
+  const [inputComment, setInputComment] = useState<string>('');
 
   const { userMap } = useSelector((state: RootStateOrAny) => state.user);
 
@@ -48,24 +50,26 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
 
   const onEstimatedHoursChanged = (e: any) => {
     setTaskEstimatedHour(Number(e.target.value));
-  }
+  };
 
   const onLogTimeChanged = (e: any) => {
     setLogTime(Number(e.target.value));
-  }
+  };
 
   const onCommentChanged = (e: any) => {
     setInputComment(e.target.value);
-  }
+  };
 
   const submitComment = () => {
     if (!task) {
       return;
     }
 
-    let formData:Task = JSON.parse(JSON.stringify(task));
+    let formData: Task = JSON.parse(JSON.stringify(task));
 
-    formData.commentsHistory = formData.commentsHistory ? formData.commentsHistory : [];
+    formData.commentsHistory = formData.commentsHistory
+      ? formData.commentsHistory
+      : [];
 
     formData.commentsHistory.push({
       userId: 1,
@@ -74,18 +78,17 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     });
 
     setTaskComments(formData.commentsHistory);
-    setInputComment("");
+    setInputComment('');
 
     dispatch(updateTaskDetail(formData));
-  }
+  };
 
   const saveTask = () => {
-
     if (!task) {
       return;
     }
 
-    let formData:Task = JSON.parse(JSON.stringify(task));
+    let formData: Task = JSON.parse(JSON.stringify(task));
 
     formData.assigneeId = taskAssigneeId;
     formData.description = taskDescription;
@@ -113,8 +116,10 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         >
           <option value={0}>Not Assigned</option>
           {Object.keys(userMap).map((userId) => {
-            const user = userMap[userId];
-            return <option value={user.id}>{user.username}</option>;
+            const user: User = userMap[userId];
+            if (user.isProjectUser) {
+              return <option value={user.id}>{user.username}</option>;
+            }
           })}
         </Form.Control>
       </Form.Group>
@@ -136,66 +141,59 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
 
   const renderEstimatedHoursField = () => {
     return (
-        <Form.Row>
-          <Col xs={6}>
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Estimated No. of Hours</Form.Label>
-              <Form.Control
-                  type="number"
-                  value={taskEstimatedHour}
-                  onChange={onEstimatedHoursChanged}
-              >
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Form.Row>
+      <Form.Row>
+        <Col xs={6}>
+          <Form.Group as={Col} controlId="formGridState">
+            <Form.Label>Estimated No. of Hours</Form.Label>
+            <Form.Control
+              type="number"
+              value={taskEstimatedHour}
+              onChange={onEstimatedHoursChanged}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+      </Form.Row>
     );
-  }
+  };
 
   const renderSpentHoursField = () => {
-
-    
-
-    const hours = taskHistoricalSpent.length > 0 ? taskHistoricalSpent.reduce((val:number, acc:number) => {
-      return acc + val;
-    }) : 0;
+    const hours =
+      taskHistoricalSpent.length > 0
+        ? taskHistoricalSpent.reduce((val: number, acc: number) => {
+            return acc + val;
+          })
+        : 0;
 
     return (
-        <Form.Row>
-          <Col xs={6}>
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Total Hours Spent</Form.Label>
-              <Form.Control
-                plaintext
-                readOnly
-                value={hours}
-              />
-            </Form.Group>
-          </Col>
-        </Form.Row>
+      <Form.Row>
+        <Col xs={6}>
+          <Form.Group as={Col} controlId="formGridState">
+            <Form.Label>Total Hours Spent</Form.Label>
+            <Form.Control plaintext readOnly value={hours} />
+          </Form.Group>
+        </Col>
+      </Form.Row>
     );
-  }
+  };
 
   const renderLogTimeField = () => {
     return (
-        <Form.Row>
-          <Col xs={6}>
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Log Time</Form.Label>
-              <Form.Control
-                  type="number"
-                  value={logTime}
-                  onChange={onLogTimeChanged}
-              >
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Form.Row>
+      <Form.Row>
+        <Col xs={6}>
+          <Form.Group as={Col} controlId="formGridState">
+            <Form.Label>Log Time</Form.Label>
+            <Form.Control
+              type="number"
+              value={logTime}
+              onChange={onLogTimeChanged}
+            ></Form.Control>
+          </Form.Group>
+        </Col>
+      </Form.Row>
     );
-  }
+  };
 
   const renderStatusField = () => {
-
     return (
       <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Status</Form.Label>
@@ -240,7 +238,6 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   const renderCommentArea = () => {
-
     let commentDiv: Array<any> = [];
 
     for (let comment of taskComments) {
@@ -275,14 +272,22 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         {renderCommentArea()}
         <div className="comment-input-wrapper">
           <Form.Control
-              as="textarea"
-              value={inputComment}
-              rows={4}
-              placeholder={'Type your comment here...'}
-              onChange={onCommentChanged}
+            as="textarea"
+            value={inputComment}
+            rows={4}
+            placeholder={'Type your comment here...'}
+            onChange={onCommentChanged}
+          ></Form.Control>
+          <Button
+            className={`button-submit-comment ${
+              inputComment.trim() === '' ? 'empty' : ''
+            }`}
+            variant="secondary"
+            size="sm"
+            onClick={submitComment}
           >
-          </Form.Control>
-          <Button className={`button-submit-comment ${inputComment.trim() === "" ? "empty" : ""}`} variant="secondary" size="sm" onClick={submitComment}>Send!</Button>
+            Send!
+          </Button>
         </div>
       </Form.Group>
     );
@@ -299,7 +304,6 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   useEffect(() => {
-
     if (task && task.status) {
       setTaskStatus(task.status);
     }
@@ -323,7 +327,6 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
     if (task && task.historicalSpent) {
       setTaskHistoricalSpent(task.historicalSpent.hrs);
     }
-    
   }, [task]);
 
   return (
