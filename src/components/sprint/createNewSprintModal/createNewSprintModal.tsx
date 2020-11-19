@@ -6,7 +6,7 @@ import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 interface CreateNewSprintModalProp {
   isVisible: boolean;
   onClose: () => void;
-  onNewSprintCreated: () => void;
+  onNewSprintCreated: (startDate: string, endDate: string) => void;
 }
 
 const CreateNewSprintModal = ({
@@ -16,22 +16,46 @@ const CreateNewSprintModal = ({
 }: CreateNewSprintModalProp) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
   const handleModalClose = () => {
     if (onClose) {
       onClose();
     }
   };
 
-  const handleCreateNewSprint = () => {};
+  const handleCreateNewSprint = () => {
+    if (onNewSprintCreated) {
+      onNewSprintCreated(startDate, endDate);
+    }
+  };
 
-  const onStartDateChanged = (e: any) => {};
-  const onEndDateChanged = (e: any) => {};
+  const onStartDateChanged = (e: any) => {
+    console.log('start date changed to ', e.target.value);
+    setStartDate(e.target.value);
+  };
+  const onEndDateChanged = (e: any) => {
+    console.log('end date changed to ', e.target.value);
+    setEndDate(e.target.value);
+  };
+
+  const resetStates = () => {
+    setStartDate('');
+    setEndDate('');
+  };
 
   return (
-    <Modal show={isVisible} className="CreateNewSprintModal">
+    <Modal
+      show={isVisible}
+      className="CreateNewSprintModal"
+      onExited={resetStates}
+    >
       <Modal.Header>
         <h3>Create New Sprint</h3>
-        <IconButton color="primary" onClick={onClose} aria-label="close">
+        <IconButton
+          color="primary"
+          onClick={handleModalClose}
+          aria-label="close"
+        >
           <CloseOutlinedIcon />
         </IconButton>
       </Modal.Header>
@@ -43,6 +67,7 @@ const CreateNewSprintModal = ({
                 <Form.Label>Start Date</Form.Label>
                 <Form.Control
                   type="text"
+                  value={startDate}
                   onChange={onStartDateChanged}
                   placeholder="yyyy-mm-dd"
                 />
@@ -51,6 +76,7 @@ const CreateNewSprintModal = ({
                 <Form.Label>End Date</Form.Label>
                 <Form.Control
                   type="text"
+                  value={endDate}
                   onChange={onEndDateChanged}
                   placeholder="yyyy-mm-dd"
                 />

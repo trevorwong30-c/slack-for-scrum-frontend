@@ -9,6 +9,7 @@ import {searchUserByKeyword} from "../../../redux/actions/searchUserByKeyword"; 
 import "./style.scss";
 import { loadUserList } from 'redux/actions/loadUserList';
 import { updateAllUsers } from "../../../redux/actions/updateUser";
+import { useHistory } from 'react-router-dom';
 
 const roleMap:Record<number, string> = {
     1: "Tester",
@@ -21,6 +22,8 @@ const UserListContainer = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [tmpUserList, setTmpUserList] = useState<Array<User>>([]);
     const [keyword, setKeyword] = useState<string>("");
+
+    const history = useHistory();
 
     const userState:UserState = useSelector(
         (state: RootStateOrAny) => state.user
@@ -105,6 +108,12 @@ const UserListContainer = () => {
     useEffect(() => {
         dispatch(loadUserList());
     }, []);
+
+    useEffect(() => {
+        if (userState.confirmUserTimestamp > 0) {
+            history.push('/scrum');
+        }
+    }, [userState.confirmUserTimestamp]);
 
     // useEffect(onRequirementListChanged, [requirementState.list]);
 

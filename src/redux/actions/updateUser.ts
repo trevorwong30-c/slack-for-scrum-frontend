@@ -14,9 +14,15 @@ export const updateAllUsers = (users:Array<User>): ThunkAction<
 > => {
   return async (dispatch) => {
     
+    let success = true;
+
     for(let user of users) {
       try {
-        await updateUser(user);
+        const res = await updateUser(user);
+        if (!res || !res.success) {
+          success = false;
+          break;
+        }
         // if (res && res.success) {
         //   dispatch(updateUserSuccess(users));
         // } else {
@@ -27,7 +33,7 @@ export const updateAllUsers = (users:Array<User>): ThunkAction<
       }
     }
     
-    dispatch(updateUserSuccess(users))
+    dispatch(updateUserSuccess(users));
 
   };
 };

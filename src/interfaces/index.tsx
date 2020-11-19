@@ -64,6 +64,7 @@ export interface UserState extends State {
   searchResults: Array<User>;
   isSearching: boolean;
   isLoadingUserList: boolean;
+  confirmUserTimestamp: number;
 }
 
 export interface TaskState extends State {
