@@ -57,7 +57,6 @@ const SprintSelector = () => {
   return (
     <>
       <Form.Group as={Col} controlId="formGridState">
-        <Form.Label>Current Sprint</Form.Label>
         <Form.Row>
           <Col>
             <Form.Control

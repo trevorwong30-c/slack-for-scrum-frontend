@@ -5,7 +5,8 @@
   .TaskDetailModal textarea {
     resize: none;
   }
-  .TaskDetailModal .card + textarea, .TaskDetailModal .card + .card {
+  .TaskDetailModal .card + textarea,
+  .TaskDetailModal .card + .card {
     margin-top: 1rem;
   }
   .TaskDetailModal .card .label-username {
@@ -14,22 +15,27 @@
   .TaskDetailModal .card .label-comment-date {
     text-align: right;
   }
-  .TaskDetailModal .comment-area, .TaskDetailModal .description-textarea {
+  .TaskDetailModal .comment-area,
+  .TaskDetailModal .description-textarea {
     /* width */
     /* Track */
     /* Handle */
     /* Handle on hover */
   }
-  .TaskDetailModal .comment-area::-webkit-scrollbar, .TaskDetailModal .description-textarea::-webkit-scrollbar {
+  .TaskDetailModal .comment-area::-webkit-scrollbar,
+  .TaskDetailModal .description-textarea::-webkit-scrollbar {
     width: 10px;
   }
-  .TaskDetailModal .comment-area::-webkit-scrollbar-track, .TaskDetailModal .description-textarea::-webkit-scrollbar-track {
+  .TaskDetailModal .comment-area::-webkit-scrollbar-track,
+  .TaskDetailModal .description-textarea::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
-  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb, .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb {
+  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb,
+  .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb {
     background: #888;
   }
-  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb:hover, .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb:hover {
+  .TaskDetailModal .comment-area::-webkit-scrollbar-thumb:hover,
+  .TaskDetailModal .description-textarea::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
   .TaskDetailModal .comment-area {
@@ -39,6 +45,17 @@
   }
   .TaskDetailModal .comment-area + textarea {
     margin-top: 10px;
+  }
+  .TaskDetailModal .comment-input-wrapper {
+    position: relative;
+  }
+  .TaskDetailModal .comment-input-wrapper .button-submit-comment {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+  .TaskDetailModal .comment-input-wrapper .button-submit-comment.empty {
+    display: none;
   }
   .TaskDetailModal .form-buttons {
     text-align: right;

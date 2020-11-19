@@ -9,6 +9,15 @@
         background-color: white;
         padding: 5px;
         cursor: default;
+        &.todoColumn {
+          border-left: 5px solid #e78c00;
+        }
+        &.inProgressColumn {
+          border-left: 5px solid #bbd500;
+        }
+        &.doneColumn {
+          border-left: 5px solid #60c32f;
+        }
         .burger{
             cursor: grab;
             div {

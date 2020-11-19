@@ -1,5 +1,55 @@
-.columnContainer {
-  height: 80%;
+.titleContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px 0;
+  height: 5vh;
+}
+
+.titleContainer .titleLabel {
+  font-size: 24px;
+}
+
+.titleContainer .sprintSelector {
+  width: 300px;
+}
+
+.titleContainer .sprintSelector .form-group {
+  margin: 0;
+}
+
+.requirementColumnContainer {
+  border: 1px solid lightgray;
+  height: calc(35vh - 5px);
+  overflow-y: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+.requirementColumnContainer .splitRequirementContainer .requirementTitle {
+  margin-left: 5px;
+  font-size: 24px;
+}
+
+.requirementColumnContainer .splitRequirementContainer .card {
+  margin: 5px;
+}
+
+.scrumBoard {
+  height: 60vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.scrumBoard .columnContainer {
   -webkit-box-flex: 33.33%;
       -ms-flex: 33.33%;
           flex: 33.33%;
@@ -13,17 +63,35 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-right: 2.5px;
+  padding-right: 2.5px;
 }
 
-.columnContainer:last-child {
+.scrumBoard .columnContainer:last-child {
   border-right: none;
+  margin-right: 0px;
+  padding-right: 0px;
 }
 
-.columnContainer .columnTitle {
+.scrumBoard .columnContainer .columnTitle {
   text-align: center;
+  font-size: 26px;
+  color: white;
 }
 
-.columnContainer .columnContent {
+.scrumBoard .columnContainer .columnTitle.todoColumn {
+  background-color: #e78c00;
+}
+
+.scrumBoard .columnContainer .columnTitle.inProgressColumn {
+  background-color: #bbd500;
+}
+
+.scrumBoard .columnContainer .columnTitle.doneColumn {
+  background-color: #60c32f;
+}
+
+.scrumBoard .columnContainer .columnContent {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
@@ -31,10 +99,19 @@
   background-color: white;
   -webkit-transition: background-color 0.5s ease;
   transition: background-color 0.5s ease;
+  overflow-y: auto;
 }
 
-.columnContainer .columnContent.isDragging {
-  background-color: lightgray;
+.scrumBoard .columnContainer .columnContent.isDragging.todoColumn {
+  background-color: #ffe9c7;
+}
+
+.scrumBoard .columnContainer .columnContent.isDragging.inProgressColumn {
+  background-color: #f8ffc4;
+}
+
+.scrumBoard .columnContainer .columnContent.isDragging.doneColumn {
+  background-color: #dff5d4;
 }
 
 .requirementColumn {
@@ -53,5 +130,19 @@
 
 .requirementColumn .columnContent.isDragging {
   background-color: lightgray;
+}
+
+::-webkit-scrollbar {
+  width: 7.5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  margin: 0 0 0 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #555f69;
 }
 /*# sourceMappingURL=TaskColumn.css.map */
