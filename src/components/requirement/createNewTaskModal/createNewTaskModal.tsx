@@ -97,8 +97,11 @@ const CreateNewTaskModal = ({
           onChange={onAssigneeChanged}
           value={assigneeId}
         >
+          <option value={0}>Not Assigned</option>
           {userList.map((user: User) => {
-            return <option value={user.id}>{user.username}</option>;
+            if (user.isProjectUser) {
+              return <option value={user.id}>{user.username}</option>;
+            }
           })}
         </Form.Control>
       </Form.Group>
