@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "AAAA,AACE,wBADsB,CACtB,oBAAoB,CAAC;EACnB,OAAO,EAAE,MAAM;EACf,MAAM,EAAE,IAAI;CACb;;AAJH,AAKE,wBALsB,CAKtB,0BAA0B,CAAC;EACzB,MAAM,EAAE,OAAO;CAChB",
+    "mappings": "AAAA,AACE,wBADsB,CACtB,oBAAoB,CAAC;EACnB,OAAO,EAAE,MAAM;CAChB;;AAHH,AAIE,wBAJsB,CAItB,0BAA0B,CAAC;EACzB,MAAM,EAAE,OAAO;CAChB",
     "sources": [
         "scrumBoardContainer.scss"
     ],

@@ -4,9 +4,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import './TaskBlock.css';
 
 function TaskBlock(props: any) {
-  console.log('-------------------------------------------');
-  console.log('task: ',props?.task);
-  console.log('-------------------------------------------');
   return (
     <Draggable
       draggableId={`${props.columnName}-${props.index}-${props?.task?.id}`}
@@ -19,7 +16,7 @@ function TaskBlock(props: any) {
           {...provided.draggableProps}
         >
           <div
-            className={`taskBlock ${snapshot.isDragging ? 'isDragging' : ''}`}
+            className={`taskBlock ${props.columnName} ${snapshot.isDragging ? 'isDragging' : ''}`}
           >
             <div className="burger" {...provided.dragHandleProps}>
               <div></div>

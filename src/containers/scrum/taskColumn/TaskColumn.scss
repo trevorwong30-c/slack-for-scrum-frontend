@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 5px 0;
+  height: 5vh;
   .titleLabel {
     font-size: 24px;
   }
@@ -16,8 +17,10 @@
 
 .requirementColumnContainer {
   border: 1px solid lightgray;
-  height: 35vh;
+  height: calc(35vh - 5px);
   overflow-y: auto;
+  box-sizing: border-box;
+  margin-bottom: 5px;
   .splitRequirementContainer {
     .requirementTitle {
       margin-left: 5px;
@@ -27,12 +30,10 @@
       margin: 5px;
     }
   }
-  .sprintLabel {
-    color: red;
-  }
 }
 .scrumBoard {
   height: 60vh;
+  display: flex;
   .columnContainer {
     flex: 33.33%;
     box-sizing: border-box;

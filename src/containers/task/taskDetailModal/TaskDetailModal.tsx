@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { Task } from '../../../interfaces';
+import { Comment, Task } from '../../../interfaces';
 import { Col, Form, Card, Button } from 'react-bootstrap';
 import './style.scss';
 import { TaskStatus } from '../../../enums';
@@ -14,40 +14,44 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 const TaskDetailModal = (props: TaskDetailModalProps) => {
   const { className, show, onHide, task } = props;
 
-  const [formData, setFormData] = useState(task);
+  const [ taskAssigneeId, setTaskAssigneeId ] = useState(0);
 
-  const [inputComment, setInputComment] = useState<string>("");
+  const [ taskStatus, setTaskStatus ] = useState(TaskStatus.NotSpecified);
+
+  const [ taskEstimatedHour, setTaskEstimatedHour ] = useState(0);
+
+  const [ taskDescription, setTaskDescription ] = useState("");
+
+  const [ taskComments, setTaskComments] = useState<Array<Comment>>([]);
+
+  const [ taskHistoricalSpent, setTaskHistoricalSpent] = useState<Array<number>>([]);
+
+  const [ logTime, setLogTime ] = useState(0);
+
+  const [ inputComment, setInputComment] = useState<string>("");
 
   const { userMap } = useSelector((state: RootStateOrAny) => state.user);
 
   const dispatch = useDispatch();
 
   const onAssigneeChanged = (e: any) => {
-    setFormData({
-      ...formData,
-      assigneeId: Number(e.target.value)
-    });
+    setTaskAssigneeId(Number(e.target.value));
   };
 
   const onStatusChanged = (e: any) => {
-    setFormData({
-      ...formData,
-      status: Number(e.target.value) as TaskStatus
-    });
+    setTaskStatus(Number(e.target.value) as TaskStatus);
   };
 
   const onDescriptionChanged = (e: any) => {
-    setFormData({
-      ...formData,
-      description: e.target.value
-    });
+    setTaskDescription(e.target.value);
   };
 
   const onEstimatedHoursChanged = (e: any) => {
-    setFormData({
-      ...formData,
-      estimatedHour: e.target.value
-    });
+    setTaskEstimatedHour(Number(e.target.value));
+  }
+
+  const onLogTimeChanged = (e: any) => {
+    setLogTime(Number(e.target.value));
   }
 
   const onCommentChanged = (e: any) => {
@@ -55,11 +59,46 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   }
 
   const submitComment = () => {
-    dispatch(postComment(Number(task?.id), inputComment));
+    if (!task) {
+      return;
+    }
+
+    let formData:Task = JSON.parse(JSON.stringify(task));
+
+    formData.commentsHistory = formData.commentsHistory ? formData.commentsHistory : [];
+
+    formData.commentsHistory.push({
+      userId: 1,
+      content: inputComment,
+      createdAt: new Date()
+    });
+
+    setTaskComments(formData.commentsHistory);
+    setInputComment("");
+
+    dispatch(updateTaskDetail(formData));
   }
 
   const saveTask = () => {
-    dispatch(updateTaskDetail());
+
+    if (!task) {
+      return;
+    }
+
+    let formData:Task = JSON.parse(JSON.stringify(task));
+
+    formData.assigneeId = taskAssigneeId;
+    formData.description = taskDescription;
+    formData.status = taskStatus;
+    formData.estimatedHour = taskEstimatedHour;
+
+    if (logTime > 0) {
+      formData.historicalSpent.hrs.push(logTime);
+      setLogTime(0);
+      setTaskHistoricalSpent(formData.historicalSpent.hrs);
+    }
+
+    dispatch(updateTaskDetail(formData));
   };
 
   const renderAssigneeField = () => {
@@ -69,7 +108,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Control
           as="select"
           defaultValue={0}
-          value={formData?.assigneeId}
+          value={taskAssigneeId}
           onChange={onAssigneeChanged}
         >
           <option value={0}>Not Assigned</option>
@@ -103,8 +142,50 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
               <Form.Label>Estimated No. of Hours</Form.Label>
               <Form.Control
                   type="number"
-                  value={formData ? formData.estimatedHour : 0}
+                  value={taskEstimatedHour}
                   onChange={onEstimatedHoursChanged}
+              >
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Form.Row>
+    );
+  }
+
+  const renderSpentHoursField = () => {
+
+    
+
+    const hours = taskHistoricalSpent.length > 0 ? taskHistoricalSpent.reduce((val:number, acc:number) => {
+      return acc + val;
+    }) : 0;
+
+    return (
+        <Form.Row>
+          <Col xs={6}>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Total Hours Spent</Form.Label>
+              <Form.Control
+                plaintext
+                readOnly
+                value={hours}
+              />
+            </Form.Group>
+          </Col>
+        </Form.Row>
+    );
+  }
+
+  const renderLogTimeField = () => {
+    return (
+        <Form.Row>
+          <Col xs={6}>
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Log Time</Form.Label>
+              <Form.Control
+                  type="number"
+                  value={logTime}
+                  onChange={onLogTimeChanged}
               >
               </Form.Control>
             </Form.Group>
@@ -121,7 +202,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Control
           as="select"
           defaultValue={TaskStatus.NotSpecified}
-          value={formData?.status as TaskStatus}
+          value={taskStatus as TaskStatus}
           onChange={onStatusChanged}
         >
           <option value={TaskStatus.NotSpecified}>Not Specified</option>
@@ -150,7 +231,7 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form.Control
           className="description-textarea"
           as="textarea"
-          value={formData?.description}
+          value={taskDescription}
           rows={4}
           onChange={onDescriptionChanged}
         ></Form.Control>
@@ -159,13 +240,10 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   const renderCommentArea = () => {
-    if (!task?.commentsHistory || task?.commentsHistory.length <= 0) {
-      return;
-    }
 
     let commentDiv: Array<any> = [];
 
-    for (let comment of task?.commentsHistory) {
+    for (let comment of taskComments) {
       commentDiv.push(
         <Card>
           <Card.Body>
@@ -221,8 +299,32 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
   };
 
   useEffect(() => {
-    setFormData(task);
-  }, [show]);
+
+    if (task && task.status) {
+      setTaskStatus(task.status);
+    }
+
+    if (task && task.description) {
+      setTaskDescription(task.description);
+    }
+
+    if (task && task.estimatedHour) {
+      setTaskEstimatedHour(task.estimatedHour);
+    }
+
+    if (task && task.assigneeId) {
+      setTaskAssigneeId(task.assigneeId);
+    }
+
+    if (task && task.commentsHistory) {
+      setTaskComments(task.commentsHistory);
+    }
+
+    if (task && task.historicalSpent) {
+      setTaskHistoricalSpent(task.historicalSpent.hrs);
+    }
+    
+  }, [task]);
 
   return (
     <Modal
@@ -239,6 +341,8 @@ const TaskDetailModal = (props: TaskDetailModalProps) => {
         <Form>
           {renderStatusRow()}
           {renderEstimatedHoursField()}
+          {renderSpentHoursField()}
+          {renderLogTimeField()}
           {renderDescriptionField()}
           {renderCommentField()}
           {renderFormButtons()}

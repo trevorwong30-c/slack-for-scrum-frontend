@@ -12,7 +12,7 @@ function TaskColumn(props: any) {
     droppableId = props.taskColumn.columnId;
   } else {
     containerClassName = 'requirementColumn';
-    droppableId = `Requirement-${props.requirementColumn.iReq_ID}-column`;
+    droppableId = `Requirement-${props.requirement.id}-column`;
   }
 
   return (

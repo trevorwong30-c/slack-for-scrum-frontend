@@ -9,6 +9,7 @@
       -ms-flex-align: center;
           align-items: center;
   padding: 5px 0;
+  height: 5vh;
 }
 
 .titleContainer .titleLabel {
@@ -25,8 +26,11 @@
 
 .requirementColumnContainer {
   border: 1px solid lightgray;
-  height: 35vh;
+  height: calc(35vh - 5px);
   overflow-y: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-bottom: 5px;
 }
 
 .requirementColumnContainer .splitRequirementContainer .requirementTitle {
@@ -38,12 +42,11 @@
   margin: 5px;
 }
 
-.requirementColumnContainer .sprintLabel {
-  color: red;
-}
-
 .scrumBoard {
   height: 60vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .scrumBoard .columnContainer {

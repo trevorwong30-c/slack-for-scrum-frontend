@@ -9,6 +9,7 @@ import CreateNewTaskModal from '../../../components/requirement/createNewTaskMod
 import TaskColumn from 'containers/scrum/taskColumn/TaskColumn';
 import TaskBlock from 'containers/scrum/taskBlock/TaskBlock';
 import { getTasksWithReqId } from '../../../redux/actions/getTasksWithReqId';
+import { loadAllTasks } from '../../../redux/actions/loadAllTasks';
 import {
   createNewTaskThunk,
   resetCreateNewTaskStatus
@@ -64,8 +65,14 @@ const SplitRequirementContainer = ({
   useEffect(() => {
     if (createTaskApiStatus == ApiStatus.Success) {
       if (addTaskRequirement?.id) {
-        dispatch(getTasksWithReqId(addTaskRequirement.id));
-        dispatch(resetCreateNewTaskStatus());
+        const addTaskRequirementId:number = addTaskRequirement?.id;
+        async function updateTaskUpdate(addTaskRequirementId:number){
+          await dispatch(getTasksWithReqId(addTaskRequirementId));
+          await dispatch(resetCreateNewTaskStatus());
+          await dispatch(loadAllTasks());
+        }
+        
+        updateTaskUpdate(addTaskRequirementId);
       }
     }
   }, [createTaskApiStatus]);
@@ -92,7 +99,7 @@ const SplitRequirementContainer = ({
       (task: Task) =>
         task.reqId === requirementId && task.status == TaskStatus.NotSpecified
     );
-    console.log('hasTasksOfThisRequirement index: ', index);
+    //console.log('hasTasksOfThisRequirement index: ', index);
     return index !== -1;
   };
 
@@ -133,6 +140,7 @@ const SplitRequirementContainer = ({
         key={requirement.id}
         requirementColumn={requirement}
         columnType={'requirementColumn'}
+        requirement={requirement}
       >
         {tasksToDisplay.map((task: Task, index: number) => {
           if (
