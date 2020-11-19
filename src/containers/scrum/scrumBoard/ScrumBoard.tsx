@@ -22,7 +22,6 @@ import './scrumBoard.css';
 
 function ScrumBoard(props: any) {
   const [taskList, setTaskList] = useState<Array<Task>>([]);
-  const [sprintTaskList, setSprintTaskList] = useState<Array<number>>([]);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [isTaskDetailModalVisible, setIsTaskDetailModalVisible] = useState(
     false
@@ -65,8 +64,6 @@ function ScrumBoard(props: any) {
   };
 
   const onDragEnd = async (result: any) => {
-    console.log('====================================================');
-    console.log('result: ', result);
     let fromRequirement: boolean = false;
     const sourceColumn = result?.source?.droppableId;
     const destinationColumn = result?.destination?.droppableId;
@@ -78,9 +75,6 @@ function ScrumBoard(props: any) {
     ) {
       fromRequirement = true;
     }
-    /*====================================================*/
-    //Test area
-    /*====================================================*/
 
     if (sourceColumn === undefined || destinationColumn === undefined)
       return console.log('Warning - Drop source/destination undefined');
@@ -96,39 +90,29 @@ function ScrumBoard(props: any) {
       );
     }
     let newTaskList: Array<Task> = [...taskList];
-    console.log('newTaskList:',newTaskList);
     const draggableId: number = +result.draggableId.split('-')[2];
-    console.log('draggableId:',draggableId);
     let updateTask: Task | undefined = taskList.find(
       (task) => task.id === draggableId
     );
-    console.log('updateTask:',updateTask);
 
     if (destinationColumn == 'todoColumn') {
-      console.log('==> Added to todoColumn');
       updateTask = { ...updateTask, status: 1 };
     } else if (destinationColumn == 'inProgressColumn') {
-      console.log('==> Added to inProgressColumn');
       updateTask = { ...updateTask, status: 2 };
     } else if (destinationColumn == 'doneColumn') {
-      console.log('==> Added to doneColumn');
       updateTask = { ...updateTask, status: 3 };
     } else {
       return console.log('Warning: unknown target status');
     }
-    console.log('updateTask: ', updateTask);
     let updateTaskIndex: number | undefined = taskState.taskList.findIndex(
       (task) => task.id === draggableId
     );
-    console.log('updateTaskIndex: ', updateTaskIndex);
     newTaskList[updateTaskIndex] = updateTask;
-    console.log('newTaskList: ', newTaskList);
     setTaskList(newTaskList);
     await dispatch(updateTaskDetail(updateTask));
 
     if (fromRequirement) {
       const requirementId: number = +sourceColumn.split('-')[1];
-      console.log(`Add ${draggableId} to sprint ${selectedSprintId}`);
       await dispatch(addTaskIdToSprintThunk(selectedSprintId, draggableId));
       await dispatch(getTasksWithSprintIdThunk(selectedSprintId));
       await dispatch(getTasksWithReqId(requirementId));
@@ -137,7 +121,6 @@ function ScrumBoard(props: any) {
 
   useEffect(() => {
     setTaskList(taskState.taskList);
-    console.log("taskList updated");
   }, [taskState.taskList]);
 
   useEffect(() => {
